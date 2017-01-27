@@ -134,7 +134,7 @@
         <carbon.caching.package.import.version>[1,2)</carbon.caching.package.import.version>
 
         <identity.event.package.export.version>${project.version}</identity.event.package.export.version>
-        <identity.common.package.export.version>${project.version}}</identity.common.package.export.version>
+        <identity.common.package.export.version>${project.version}</identity.common.package.export.version>
         <identity.keystore.package.export.version>${project.version}</identity.keystore.package.export.version>
 
     </properties>
