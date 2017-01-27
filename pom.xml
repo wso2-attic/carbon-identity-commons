@@ -34,9 +34,9 @@
     <url>http://wso2.org</url>
 
     <scm>
-        <url>https://github.com/wso2/carbon-identity-framework.git</url>
-        <developerConnection>scm:git:https://github.com/wso2/carbon-identity-framework.git</developerConnection>
-        <connection>scm:git:https://github.com/wso2/carbon-identity-framework.git</connection>
+        <url>https://github.com/wso2/carbon-identity-commons.git</url>
+        <developerConnection>scm:git:https://github.com/wso2/carbon-identity-commons.git</developerConnection>
+        <connection>scm:git:https://github.com/wso2/carbon-identity-commons.git</connection>
         <tag>HEAD</tag>
     </scm>
 
