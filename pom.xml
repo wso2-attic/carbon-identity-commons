@@ -94,6 +94,11 @@
                 <artifactId>org.wso2.carbon.identity.commons</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.wso2.orbit.org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${org.snakeyaml.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -133,6 +138,7 @@
         <commons-collections.import.version.range>[3,4)</commons-collections.import.version.range>
         <commons-io.version>2.5</commons-io.version>
         <commons-io.package.import.version.range>[2.5,3)</commons-io.package.import.version.range>
+        <org.snakeyaml.version>1.16.0.wso2v1</org.snakeyaml.version>
 
         <carbon.logging.version>5.1.0-m2</carbon.logging.version>
         <carbon.logging.package.import.version>[5,6)</carbon.logging.package.import.version>

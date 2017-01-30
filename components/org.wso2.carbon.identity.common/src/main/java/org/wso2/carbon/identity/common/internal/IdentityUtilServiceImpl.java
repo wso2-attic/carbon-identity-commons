@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.wso2.carbon.identity.common.base.exception.IdentityException;
 import org.wso2.carbon.identity.common.util.IdentityUtilService;
 import org.wso2.carbon.identity.common.util.IdentityUtils;
+import org.wso2.carbon.identity.common.util.config.IdentityConfigUtils;
 import org.wso2.carbon.identity.common.util.jdbc.JDBCUtils;
 import org.wso2.carbon.identity.common.util.keystore.KeyStoreUtils;
 import org.wso2.carbon.identity.common.util.log.LogUtils;
@@ -40,6 +41,11 @@ public class IdentityUtilServiceImpl implements IdentityUtilService {
     @Override
     public IdentityUtils getIdentityUtils() throws IdentityException {
         return IdentityUtils.getInstance();
+    }
+
+    @Override
+    public IdentityConfigUtils getIdentityConfigUtils() throws IdentityException {
+        return IdentityConfigUtils.getInstance();
     }
 
     @Override
