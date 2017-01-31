@@ -159,10 +159,10 @@ public class ValidationUtils {
 
     /**
      * Returns the input if valid over the given white list patterns else throws an InputValidationException.
-     *
-     * @param input             input
+     * @param input input
      * @param whiteListPatterns a String array of white list pattern keys.
      * @return input if valid over the given white list patterns else throws an InputValidationException.
+     * @throws IdentityException : identityException
      */
     public String getValidInputOverWhiteListPatterns(String input, String... whiteListPatterns)
             throws IdentityException {
@@ -180,6 +180,7 @@ public class ValidationUtils {
      * @param input             input.
      * @param blackListPatterns a String array of black list pattern keys.
      * @return input if valid over the given black list patterns else throws an InputValidationException.
+     * @throws IdentityException : identityException
      */
     public String getValidInputOverBlackListPatterns(String input, String... blackListPatterns)
             throws IdentityException {
@@ -198,8 +199,8 @@ public class ValidationUtils {
      * @param input             input.
      * @param whiteListPatterns a String array of white list pattern keys.
      * @param blackListPatterns a String array of black list pattern keys.
-     * @return input if valid over the given white list and black list patterns else throws an
- InputValidationException.
+     * @return input if valid over the given white list and black list patterns else throws an InputValidationException.
+     * @throws IdentityException : identityException
      */
     public String getValidInput(String input, String[] whiteListPatterns, String[] blackListPatterns)
             throws IdentityException {

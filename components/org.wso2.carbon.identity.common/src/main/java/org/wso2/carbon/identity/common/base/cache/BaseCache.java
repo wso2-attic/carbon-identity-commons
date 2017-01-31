@@ -20,8 +20,8 @@ import java.io.Serializable;
 
 /**
  * A base class for all cache implementations in Identity Application Management modules.
- * @param <K>
- * @param <V>
+ * @param <K> : K
+ * @param <V> : V
  */
 public class BaseCache<K extends Serializable, V extends Serializable> {
 

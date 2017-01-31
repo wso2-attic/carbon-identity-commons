@@ -25,14 +25,13 @@ import javax.cache.event.CacheEntryListener;
 
 /**
  * Abstract Cache Entry Listener.
- * @param <K>
- * @param <V>
+ * @param <K> : K
+ * @param <V> : V
  */
 public abstract class AbstractCacheEntryListener<K, V> implements CacheEntryListener<K, V> {
 
     /**
      * Return is listener enable.
-     *
      * @return enable/disable
      */
     public boolean isEnable() {
