@@ -24,8 +24,8 @@ import java.util.Map;
 
 /**
  * Message context.
- * @param <T1>
- * @param <T2>
+ * @param <T1> : key
+ * @param <T2> : Value
  */
 public abstract class MessageContext<T1 extends Object, T2 extends Object> {
 

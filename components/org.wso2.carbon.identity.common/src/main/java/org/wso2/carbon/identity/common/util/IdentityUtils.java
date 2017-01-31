@@ -89,8 +89,8 @@ public class IdentityUtils {
 
     /**
      * Generates a secure random hexadecimal string using SHA1 PRNG and digest.
-     *
      * @return Random hexadecimal encoded String
+     * @throws Exception : Exeption
      */
     public static String generateUUID() throws Exception {
 
@@ -115,6 +115,8 @@ public class IdentityUtils {
 
     /**
      * Generates a random number using two UUIDs and HMAC-SHA1.
+     * @return : random
+     * @throws IdentityRuntimeException : IdentityRuntimeException
      */
     public static String generateRandomNumber() throws IdentityRuntimeException {
         try {
@@ -195,8 +197,8 @@ public class IdentityUtils {
     }
 
     /**
-     * @param array
-     * @return
+     * @param array : Array of input
+     * @return : ExclusiveOR
      */
     public static boolean exclusiveOR(boolean[] array) {
         boolean foundTrue = false;

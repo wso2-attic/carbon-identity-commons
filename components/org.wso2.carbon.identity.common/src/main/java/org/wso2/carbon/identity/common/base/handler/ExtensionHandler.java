@@ -25,9 +25,8 @@ public abstract class ExtensionHandler extends AbstractHandler {
 
     /**
      * Handles the request.
-     *
-     * @return {@code HandlerReturnStatus}
-     * @throws IdentityException
+     * @return : status
+     * @throws IdentityException : Identity Excepiton
      */
     public abstract ExtHandlerReturnStatus handle() throws IdentityException;
 }
