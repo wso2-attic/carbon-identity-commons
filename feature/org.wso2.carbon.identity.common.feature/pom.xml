@@ -38,6 +38,11 @@
             <artifactId>org.wso2.carbon.identity.commons</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.identity.commons</groupId>
+            <artifactId>org.wso2.carbon.identity.event</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -68,6 +73,10 @@
                             <bundles>
                                 <bundle>
                                     <symbolicName>org.wso2.carbon.identity.commons</symbolicName>
+                                    <version>${project.version}</version>
+                                </bundle>
+                                <bundle>
+                                    <symbolicName>org.wso2.carbon.identity.event</symbolicName>
                                     <version>${project.version}</version>
                                 </bundle>
                             </bundles>
