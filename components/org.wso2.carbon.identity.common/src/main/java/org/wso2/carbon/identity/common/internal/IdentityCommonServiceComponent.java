@@ -56,7 +56,6 @@ public class IdentityCommonServiceComponent {
         }
     }
 
-
     protected void deactivate(ComponentContext context) {
         if (serviceRegistration != null) {
             serviceRegistration.unregister();
