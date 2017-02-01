@@ -21,7 +21,7 @@
     <parent>
         <groupId>org.wso2.carbon.identity.commons</groupId>
         <artifactId>identity-commons</artifactId>
-        <version>0.1.7-SNAPSHOT</version>
+        <version>0.1.8-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
@@ -68,6 +68,7 @@
                                     <directory>resources</directory>
                                     <includes>
                                         <include>conf/identity.yaml</include>
+                                        <include>identity-event.properties</include>
                                         <include>p2.inf</include>
                                         <include>build.properties</include>
                                     </includes>
