@@ -66,7 +66,7 @@ public class URLUtils {
      */
     public static String fillURLPlaceholders(String urlWithPlaceholders) {
 
-        // supported placeholders in C4 we host, carbon protocol, carbon https port, http port, proxy context path, web
+        // supported placeholders in C4 we host, carbon protocol, carbon https port, http port, proxy context path,web
         // context root, carbon web context, carbon context
         return null;
     }

@@ -65,7 +65,7 @@ public class ConfigParser {
     /**
      * To read properties from the identity.yaml.
      *
-     * @param key
+     * @param key : key
      * @return Properties defined under that configuration.
      */
     public static Properties getProperties(String key) {

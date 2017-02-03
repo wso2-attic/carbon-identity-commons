@@ -132,7 +132,7 @@ public class KeyStoreUtils {
      * Helper method to hexify a byte array.
      * TODO:need to verify the logic
      *
-     * @param bytes
+     * @param bytes : bytes
      * @return hexadecimal representation
      */
     public String hexify(byte bytes[]) {

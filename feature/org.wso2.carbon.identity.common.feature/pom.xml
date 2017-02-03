@@ -21,7 +21,7 @@
     <parent>
         <groupId>org.wso2.carbon.identity.commons</groupId>
         <artifactId>identity-commons</artifactId>
-        <version>6.0.0-SNAPSHOT</version>
+        <version>0.1.12-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
@@ -43,15 +43,36 @@
             <artifactId>org.wso2.carbon.identity.event</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.identity.commons</groupId>
-            <artifactId>org.wso2.carbon.identity.keystore</artifactId>
-            <version>${project.version}</version>
-        </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>prefilter-resources</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>src/main/resources</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>resources</directory>
+                                    <includes>
+                                        <include>identity-event.properties</include>
+                                        <include>conf/identity.yaml</include>
+                                        <include>p2.inf</include>
+                                        <include>build.properties</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.wso2.carbon.maven</groupId>
                 <artifactId>carbon-feature-plugin</artifactId>
@@ -82,10 +103,6 @@
                                 </bundle>
                                 <bundle>
                                     <symbolicName>org.wso2.carbon.identity.event</symbolicName>
-                                    <version>${project.version}</version>
-                                </bundle>
-                                <bundle>
-                                    <symbolicName>org.wso2.carbon.identity.keystore</symbolicName>
                                     <version>${project.version}</version>
                                 </bundle>
                             </bundles>

@@ -24,8 +24,8 @@ import java.util.Map;
 
 /**
  * Message context.
- * @param <T1>
- * @param <T2>
+ * @param <T1> : key
+ * @param <T2> : Value
  */
 public abstract class MessageContext<T1 extends Object, T2 extends Object> {
 
@@ -42,7 +42,7 @@ public abstract class MessageContext<T1 extends Object, T2 extends Object> {
 
     public void addParameter(T1 key, T2 value) {
         if (this.parameters.containsKey(key)) {
-            throw IdentityRuntimeException.error("Parameters map trying to override existing key " +
+            throw new IdentityRuntimeException("Parameters map trying to override existing key " +
                     key);
         }
         parameters.put(key, value);
@@ -51,7 +51,7 @@ public abstract class MessageContext<T1 extends Object, T2 extends Object> {
     public void addParameters(Map<T1, T2> parameters) {
         for (Map.Entry<T1, T2> parameter : parameters.entrySet()) {
             if (this.parameters.containsKey(parameter.getKey())) {
-                throw IdentityRuntimeException.error("Parameters map trying to override existing key " + parameter
+                throw new IdentityRuntimeException("Parameters map trying to override existing key " + parameter
                         .getKey());
             }
             parameters.put(parameter.getKey(), parameter.getValue());

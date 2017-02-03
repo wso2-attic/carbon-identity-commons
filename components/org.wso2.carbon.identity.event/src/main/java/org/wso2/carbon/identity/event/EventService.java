@@ -16,14 +16,24 @@
 
 package org.wso2.carbon.identity.event;
 
-
-import org.wso2.carbon.identity.event.model.Event;
-
 /**
  * Represents an event service.
  */
 public interface EventService {
 
-    void handleEvent(Event event) throws EventException;
+    /**
+     * Executes handle logic for a given MessageContext.
+     *
+     * @param eventMessageContext EventMessageContext.
+     * @throws EventException If an error occurs during event handling.
+     */
+    void handleEvent(EventMessageContext eventMessageContext) throws EventException;
 
+    /**
+     * Executes rollback logic for a given MessageContext.
+     *
+     * @param eventMessageContext EventMessageContext.
+     * @throws EventException If an error occurs during rollback.
+     */
+    void rollbackEvent(EventMessageContext eventMessageContext) throws EventException;
 }

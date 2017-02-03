@@ -47,9 +47,9 @@ public class HandlerManager {
 
     /**
      * Get the first priority handler after sort and filter the enabled handlers.
-     *
-     * @param identityHandlers
-     * @param isEnableHandlersOnly
+     * @param identityHandlers : identity handlers
+     * @param isEnableHandlersOnly : Is enabled handlers only
+     * @param <T> : T
      * @return IdentityHandler
      */
     public <T extends Handler> T getFirstPriorityHandler(List<T> identityHandlers,
@@ -83,11 +83,10 @@ public class HandlerManager {
     }
 
     /**
-     * Sort and filter enabled handlers.
-     *
-     * @param identityHandlers
-     * @param isEnableHandlersOnly
-     * @return List<IdentityHandler>
+     * @param identityHandlers : identity handlers
+     * @param isEnableHandlersOnly : is Enabled handlers only
+     * @param <T> : T
+     * @return : list of identity handlers
      */
     public <T extends Handler> List<T> sortHandlers(List<T> identityHandlers,
                                                     boolean isEnableHandlersOnly) {
@@ -113,10 +112,12 @@ public class HandlerManager {
     /**
      * Get the first priority handler after sort and filter the enabled handlers.
      *
-     * @param identityMessageHandlers
-     * @param isEnableHandlersOnly
-     * @param messageContext
-     * @return IdentityMessageHandler
+     * @param identityMessageHandlers : Identity Message Handlers
+     * @param isEnableHandlersOnly : Is Enabled Handlers Only
+     * @param messageContext : Message Context
+     * @param <T1> : T1
+     * @param <T2> : T2
+     * @return IdentityMessageHandler : Identity Message Handler
      */
     public <T1 extends MessageHandler, T2 extends MessageContext> T1
     getFirstPriorityHandler(List<T1> identityMessageHandlers, boolean isEnableHandlersOnly, T2 messageContext) {
@@ -155,11 +156,12 @@ public class HandlerManager {
 
     /**
      * Sort and filter enabled handlers.
-     *
-     * @param identityMessageHandlers
-     * @param isEnableHandlersOnly
-     * @param messageContext
-     * @return List<IdentityMessageHandler>
+     * @param identityMessageHandlers : Identity Messge Handlers
+     * @param isEnableHandlersOnly : Is Enabled Handlers Only
+     * @param messageContext : Message Context
+     * @param <T1> : T1
+     * @param <T2> : T2
+     * @return  List of Identity Message Handlers
      */
     public <T1 extends MessageHandler, T2 extends MessageContext> List<T1> sortHandlers
     (List<T1> identityMessageHandlers, boolean isEnableHandlersOnly, T2 messageContext) {

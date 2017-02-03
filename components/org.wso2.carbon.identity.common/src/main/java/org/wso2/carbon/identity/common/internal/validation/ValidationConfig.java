@@ -36,7 +36,8 @@ public class ValidationConfig {
 
     /**
      * Adds a validation pattern and stores it against the provided key.
-     * Throws an IllegalArgumentException if pattern key or pattern is empty, or if a pattern exists for the given key.
+     * Throws an IllegalArgumentException if pattern key or pattern is empty, or if a pattern exists for the given
+ key.
      *
      * @param key   pattern key
      * @param regex pattern regex

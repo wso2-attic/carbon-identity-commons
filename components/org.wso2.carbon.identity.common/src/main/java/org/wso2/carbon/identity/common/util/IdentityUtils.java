@@ -89,8 +89,8 @@ public class IdentityUtils {
 
     /**
      * Generates a secure random hexadecimal string using SHA1 PRNG and digest.
-     *
      * @return Random hexadecimal encoded String
+     * @throws Exception : Exeption
      */
     public static String generateUUID() throws Exception {
 
@@ -115,6 +115,8 @@ public class IdentityUtils {
 
     /**
      * Generates a random number using two UUIDs and HMAC-SHA1.
+     * @return : random
+     * @throws IdentityRuntimeException : IdentityRuntimeException
      */
     public static String generateRandomNumber() throws IdentityRuntimeException {
         try {
@@ -129,7 +131,7 @@ public class IdentityUtils {
             random = new String(Base64.getEncoder().encode(rawHmac), StandardCharsets.UTF_8);
             return random;
         } catch (NoSuchAlgorithmException | InvalidKeyException e) {
-            throw IdentityRuntimeException.error("Error occurred while generating random number.", e);
+            throw new IdentityRuntimeException("Error occurred while generating random number.", e);
         }
     }
 
@@ -143,7 +145,7 @@ public class IdentityUtils {
             }
             return number;
         } catch (NoSuchAlgorithmException e) {
-            throw IdentityRuntimeException.error("Error occurred while generating random integer.", e);
+            throw new IdentityRuntimeException("Error occurred while generating random integer.", e);
         }
 
     }
@@ -195,8 +197,8 @@ public class IdentityUtils {
     }
 
     /**
-     * @param array
-     * @return
+     * @param array : Array of input
+     * @return : ExclusiveOR
      */
     public static boolean exclusiveOR(boolean[] array) {
         boolean foundTrue = false;

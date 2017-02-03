@@ -25,21 +25,20 @@ public interface MessageHandler {
 
     /**
      * Initializes the handler.
+     * @param initConfig : initConfig
      */
     public void init(InitConfig initConfig);
 
     /**
      * Name of the handler.
-     *
      * @return Name of the handler
      */
     public String getName();
 
     /**
-     * Tells if the handler is enabled or not. Based on the result {@Code canHandle()} and {@code handle()} may be
-     * called.
-     *
+     * Tells if the handler is enabled or not.
      * @param messageContext The runtime message context
+     * @return : enable
      */
     public boolean isEnabled(MessageContext messageContext);
 
@@ -55,7 +54,7 @@ public interface MessageHandler {
      * Tells if this request can be handled by this handler.
      *
      * @param messageContext The runtime message context
-     * @return {@code true} if the message can be handled by this handler
+     * @return if the message can be handled by this handler
      */
     public boolean canHandle(MessageContext messageContext);
 }

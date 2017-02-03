@@ -26,7 +26,7 @@
     <groupId>org.wso2.carbon.identity.commons</groupId>
     <artifactId>identity-commons</artifactId>
     <packaging>pom</packaging>
-    <version>6.0.0-SNAPSHOT</version>
+    <version>0.1.12-SNAPSHOT</version>
     <name>WSO2 Carbon - Identity Commons Aggregator</name>
     <description>
         This is a Carbon bundle that represents the Identity Commons aggregate module.
@@ -34,16 +34,16 @@
     <url>http://wso2.org</url>
 
     <scm>
-        <url>https://github.com/wso2/carbon-identity-framework.git</url>
-        <developerConnection>scm:git:https://github.com/wso2/carbon-identity-framework.git</developerConnection>
-        <connection>scm:git:https://github.com/wso2/carbon-identity-framework.git</connection>
+        <url>https://github.com/wso2/carbon-identity-commons.git</url>
+        <developerConnection>scm:git:https://github.com/wso2/carbon-identity-commons.git</developerConnection>
+        <connection>scm:git:https://github.com/wso2/carbon-identity-commons.git</connection>
         <tag>HEAD</tag>
     </scm>
 
     <modules>
         <module>components/org.wso2.carbon.identity.common</module>
         <module>components/org.wso2.carbon.identity.event</module>
-        <module>components/org.wso2.carbon.identity.keystore</module>
+        <!--<module>components/org.wso2.carbon.identity.keystore</module>-->
         <module>feature/org.wso2.carbon.identity.common.feature</module>
     </modules>
 
@@ -70,11 +70,6 @@
                 <version>${carbon.caching.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.carbon</groupId>
-                <artifactId>org.wso2.carbon.logging</artifactId>
-                <version>${carbon.kernel.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>apache-collections</groupId>
                 <artifactId>commons-collections</artifactId>
                 <version>${commons-collections.version}</version>
@@ -93,6 +88,11 @@
                 <groupId>org.wso2.carbon.identity.commons</groupId>
                 <artifactId>org.wso2.carbon.identity.commons</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.orbit.org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${org.snakeyaml.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -119,7 +119,7 @@
     </build>
 
     <properties>
-        <carbon.kernel.version>5.1.0-m2</carbon.kernel.version>
+        <carbon.kernel.version>5.1.0</carbon.kernel.version>
         <carbon.kernel.package.import.version>[5,6)</carbon.kernel.package.import.version>
         <carbon.feature.plugin.version>2.0.1</carbon.feature.plugin.version>
 
@@ -133,14 +133,14 @@
         <commons-collections.import.version.range>[3,4)</commons-collections.import.version.range>
         <commons-io.version>2.5</commons-io.version>
         <commons-io.package.import.version.range>[2.5,3)</commons-io.package.import.version.range>
+        <org.snakeyaml.version>1.16.0.wso2v1</org.snakeyaml.version>
 
-        <carbon.logging.version>5.1.0-m2</carbon.logging.version>
         <carbon.logging.package.import.version>[5,6)</carbon.logging.package.import.version>
         <carbon.caching.version>1.0.0</carbon.caching.version>
         <carbon.caching.package.import.version>[1,2)</carbon.caching.package.import.version>
 
         <identity.event.package.export.version>${project.version}</identity.event.package.export.version>
-        <identity.common.package.export.version>${project.version}}</identity.common.package.export.version>
+        <identity.common.package.export.version>${project.version}</identity.common.package.export.version>
         <identity.keystore.package.export.version>${project.version}</identity.keystore.package.export.version>
 
     </properties>

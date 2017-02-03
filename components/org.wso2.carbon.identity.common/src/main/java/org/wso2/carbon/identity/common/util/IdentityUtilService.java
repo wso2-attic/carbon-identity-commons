@@ -17,6 +17,7 @@
 package org.wso2.carbon.identity.common.util;
 
 import org.wso2.carbon.identity.common.base.exception.IdentityException;
+import org.wso2.carbon.identity.common.util.config.IdentityConfigUtils;
 import org.wso2.carbon.identity.common.util.jdbc.JDBCUtils;
 import org.wso2.carbon.identity.common.util.keystore.KeyStoreUtils;
 import org.wso2.carbon.identity.common.util.log.LogUtils;
@@ -48,5 +49,7 @@ public interface IdentityUtilService {
     XMLUtils getXMLUtils() throws IdentityException;
 
     IdentityUtils getIdentityUtils() throws IdentityException;
+
+    IdentityConfigUtils getIdentityConfigUtils() throws IdentityException;
 
 }

@@ -40,7 +40,7 @@ public class EventDistributionTask implements Runnable {
     /**
      * Queue used to add events by publishers.
      */
-    private BlockingDeque<Event> eventQueue;
+    private BlockingDeque<EventMessageContext> eventQueue;
     /**
      * Registered message sending modules.
      */
@@ -58,11 +58,11 @@ public class EventDistributionTask implements Runnable {
      */
     public EventDistributionTask(List<AbstractEventHandler> notificationSendingModules, int threadPoolSize) {
         this.notificationSendingModules = notificationSendingModules;
-        this.eventQueue = new LinkedBlockingDeque<Event>();
+        this.eventQueue = new LinkedBlockingDeque<>();
         EventDataHolder.getInstance().setThreadPool(Executors.newFixedThreadPool(threadPoolSize));
     }
 
-    public void addEventToQueue(Event publisherEvent) {
+    public void addEventToQueue(EventMessageContext publisherEvent) {
         this.eventQueue.add(publisherEvent);
     }
 
@@ -72,11 +72,11 @@ public class EventDistributionTask implements Runnable {
         // Run forever until stop the bundle. Will stop in eventQueue.take()
         while (running) {
             try {
-                final Event event = eventQueue.take();
-                EventMessageContext eventContext = new EventMessageContext(event);
+                final EventMessageContext eventMessageContext = eventQueue.take();
+                Event event = eventMessageContext.getEvent();
                 for (final AbstractEventHandler module : notificationSendingModules) {
                     // If the module is subscribed to the event, module will be executed.
-                    if (module.isEnabled(eventContext)) {
+                    if (module.isEnabled(eventMessageContext)) {
                         // Create a runnable and submit to the thread pool for sending message.
                         Runnable msgSender = () -> {
                             if (logger.isDebugEnabled()) {
@@ -84,7 +84,7 @@ public class EventDistributionTask implements Runnable {
                                         getEventName());
                             }
                             try {
-                                module.handleEvent(event);
+                                module.handleEvent(eventMessageContext);
                             } catch (EventException e) {
                                 logger.error("Error while invoking notification sending module " + module.
                                         getName(), e);

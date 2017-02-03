@@ -76,7 +76,8 @@ public class XMLUtils {
 //            dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 //
 //        } catch (ParserConfigurationException e) {
-//            logger.error("Failed to load XML Processor Feature " + Constants.EXTERNAL_GENERAL_ENTITIES_FEATURE+" or" +
+//            logger.error("Failed to load XML Processor Feature " + Constants.EXTERNAL_GENERAL_ENTITIES_FEATURE+"
+// or" +
 //                    " " +
 //                    Constants.EXTERNAL_PARAMETER_ENTITIES_FEATURE + " or " + Constants.LOAD_EXTERNAL_DTD_FEATURE +
 //                    " or secure-processing.");

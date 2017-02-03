@@ -23,25 +23,24 @@ public interface Handler {
 
     /**
      * Initializes the handler.
+     * @param initConfig : initConfig
      */
     public void init(InitConfig initConfig);
 
     /**
      * Name of the handler.
-     *
      * @return Name of the handler
      */
     public String getName();
 
     /**
-     * Tells if the handler is enabled or not. Based on the result {@Code canHandle()} and {@code handle()} may be
-     * called.
+     * Tells if the handler is enabled or not.
+     * @return : enable
      */
     public boolean isEnabled();
 
     /**
      * Used to sort the set of handlers.
-     *
      * @return The priority value of the handler
      */
     public int getPriority();
