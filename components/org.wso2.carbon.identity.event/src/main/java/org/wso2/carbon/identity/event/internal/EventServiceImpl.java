@@ -23,7 +23,9 @@ import org.wso2.carbon.identity.event.EventException;
 import org.wso2.carbon.identity.event.EventMessageContext;
 import org.wso2.carbon.identity.event.EventService;
 import org.wso2.carbon.identity.event.model.Event;
+import org.wso2.carbon.identity.event.model.EventHandlerBean;
 
+import java.util.Deque;
 import java.util.List;
 
 /**
@@ -43,19 +45,34 @@ public final class EventServiceImpl implements EventService {
     }
 
     @Override
-    public void handleEvent(Event event) throws EventException {
+    public void handleEvent(EventMessageContext eventMessageContext) throws EventException {
 
         List<AbstractEventHandler> eventHandlerList = EventServiceComponent.EVENT_HANDLER_LIST;
-        EventMessageContext eventContext = new EventMessageContext(event);
+        Event event = eventMessageContext.getEvent();
+
         for (final AbstractEventHandler handler : eventHandlerList) {
 
-            if (handler.canHandle(eventContext)) {
+            if (handler.canHandle(eventMessageContext)) {
                 if (handler.isAssociationAsync(event.getEventName())) {
-                    eventDistributionTask.addEventToQueue(event);
+                    eventDistributionTask.addEventToQueue(eventMessageContext);
                 } else {
-                    handler.handleEvent(event);
+                    eventMessageContext.addToEventHandlerStack(handler);
+                    handler.handleEvent(eventMessageContext);
                 }
             }
         }
+    }
+
+    @Override
+    public void rollbackEvent(EventMessageContext eventMessageContext) throws EventException {
+
+        Deque<EventHandlerBean> eventHandlerStack = eventMessageContext.getEventHandlerStack();
+
+        eventHandlerStack.forEach(eventHandlerBean -> {
+
+            eventMessageContext.setEvent(eventHandlerBean.getEvent());
+            eventHandlerBean.getHandler().rollBack(eventMessageContext);
+        });
+
     }
 }

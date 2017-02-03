@@ -18,6 +18,10 @@ package org.wso2.carbon.identity.event;
 
 import org.wso2.carbon.identity.common.base.message.MessageContext;
 import org.wso2.carbon.identity.event.model.Event;
+import org.wso2.carbon.identity.event.model.EventHandlerBean;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 /**
  * Event message context.
@@ -25,6 +29,8 @@ import org.wso2.carbon.identity.event.model.Event;
 public class EventMessageContext extends MessageContext {
 
     private Event event;
+
+    private Deque<EventHandlerBean> handlerDeque = new ArrayDeque<>();
 
     public EventMessageContext(Event event) {
         super();
@@ -39,4 +45,13 @@ public class EventMessageContext extends MessageContext {
     public void setEvent(Event event) {
         this.event = event;
     }
+
+    public Deque<EventHandlerBean> getEventHandlerStack() {
+        return handlerDeque;
+    }
+
+    public void addToEventHandlerStack(AbstractEventHandler handler) {
+        handlerDeque.add(new EventHandlerBean(this.event, handler));
+    }
+
 }
