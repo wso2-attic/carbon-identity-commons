@@ -43,7 +43,7 @@ public abstract class AbstractEventHandler extends AbstractMessageHandler {
         Event event = ((EventMessageContext) messageContext).getEvent();
         String eventName = event.getEventName();
         String moduleName = this.getName();
-        ConfigParser notificationMgtConfigBuilder = null;
+        ConfigParser notificationMgtConfigBuilder;
         try {
             notificationMgtConfigBuilder = ConfigParser.getInstance();
         } catch (EventException e) {
@@ -83,7 +83,14 @@ public abstract class AbstractEventHandler extends AbstractMessageHandler {
         return false;
     }
 
-    public abstract void handleEvent(Event event) throws EventException;
+    public abstract void handleEvent(EventMessageContext eventMessageContext) throws EventException;
+
+    /**
+     * Rollback opreation of the handler.
+     *
+     * @param messageContext The runtime message context.
+     */
+    public abstract void rollBack(MessageContext messageContext);
 
     @Override
     public void init(InitConfig configuration) throws IdentityRuntimeException {
