@@ -97,7 +97,7 @@ public class EventConstants {
     public static class EventProperty {
 
         public static final String MODULE = "module";
-        public static final String USER_NAME = "user-name";
+        public static final String USER_UNIQUE_ID = "user-unique-id";
         public static final String ROLE_NAME = "role-name";
         public static final String USER_STORE_DOMAIN = "userstore-domain";
         public static final String CONFIRMATION_CODE = "confirmation-code";
