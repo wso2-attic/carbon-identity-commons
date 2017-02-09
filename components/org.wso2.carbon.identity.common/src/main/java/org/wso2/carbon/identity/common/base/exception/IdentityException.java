@@ -28,6 +28,10 @@ public class IdentityException extends Exception {
         super(message);
     }
 
+    public IdentityException(Throwable cause) {
+        super(cause);
+    }
+
     public IdentityException(String errorCode, String message) {
         super(message);
         this.errorCode = errorCode;
