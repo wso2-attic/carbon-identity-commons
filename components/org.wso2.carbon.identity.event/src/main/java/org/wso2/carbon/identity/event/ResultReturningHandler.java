@@ -25,20 +25,31 @@ import org.wso2.carbon.identity.common.base.handler.InitConfig;
  * This handler can be used when even handling returns a result.
  *
  * @param <T> Result type.
+ * @param <X> Exception type.
  */
-public abstract class ResultReturningHandler<T extends Object> implements IdentityEventHandler {
+public abstract class ResultReturningHandler<T extends Object, X extends Exception> implements IdentityEventHandler {
 
     private T result;
 
-    public T getResult() {
+    private X ex;
+
+    public T getResult() throws X {
+
+        if (ex != null) {
+            throw ex;
+        }
         return result;
     }
 
-    public abstract T handleEventWithResult(EventContext eventContext) throws IdentityException;
+    public abstract <X1 extends Exception> T handleEventWithResult(EventContext eventContext) throws X1;
 
     @Override
     public void handleEvent(EventContext eventContext) throws IdentityException {
-        result = handleEventWithResult(eventContext);
+        try {
+            result = handleEventWithResult(eventContext);
+        } catch (Exception x) {
+            ex = (X) x;
+        }
     }
 
     @Override
