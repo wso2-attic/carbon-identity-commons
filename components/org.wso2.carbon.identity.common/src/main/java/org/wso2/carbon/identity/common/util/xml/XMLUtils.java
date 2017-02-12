@@ -16,11 +16,13 @@
 
 package org.wso2.carbon.identity.common.util.xml;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
+import org.wso2.carbon.identity.common.base.Constants;
 import org.wso2.carbon.identity.common.base.exception.IdentityException;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
@@ -28,9 +30,64 @@ import javax.xml.parsers.DocumentBuilderFactory;
  */
 public class XMLUtils {
 
-    private static final Logger logger = LoggerFactory.getLogger(XMLUtils.class);
     private static final int ENTITY_EXPANSION_LIMIT = 0;
     private static volatile XMLUtils instance = new XMLUtils();
+    private static final Map<String, String> xmlSignatureAlgorithms;
+    private static final Map<String, String> xmlDigestAlgorithms;
+
+    static {
+
+        Map<String, String> xmlSignatureAlgorithmMap = new LinkedHashMap<>();
+        xmlSignatureAlgorithmMap.put(
+                Constants.XML.SignatureAlgorithm.DSA_SHA1,
+                Constants.XML.SignatureAlgorithmURI.DSA_SHA1);
+        xmlSignatureAlgorithmMap.put(
+                Constants.XML.SignatureAlgorithm.ECDSA_SHA1,
+                Constants.XML.SignatureAlgorithmURI.ECDSA_SHA1);
+        xmlSignatureAlgorithmMap.put(
+                Constants.XML.SignatureAlgorithm.ECDSA_SHA256,
+                Constants.XML.SignatureAlgorithmURI.ECDSA_SHA256);
+        xmlSignatureAlgorithmMap.put(
+                Constants.XML.SignatureAlgorithm.ECDSA_SHA384,
+                Constants.XML.SignatureAlgorithmURI.ECDSA_SHA384);
+        xmlSignatureAlgorithmMap.put(
+                Constants.XML.SignatureAlgorithm.ECDSA_SHA512,
+                Constants.XML.SignatureAlgorithmURI.ECDSA_SHA512);
+        xmlSignatureAlgorithmMap.put(
+                Constants.XML.SignatureAlgorithm.RSA_MD5,
+                Constants.XML.SignatureAlgorithmURI.RSA_MD5);
+        xmlSignatureAlgorithmMap.put(
+                Constants.XML.SignatureAlgorithm.RSA_RIPEMD160,
+                Constants.XML.SignatureAlgorithmURI.RSA_RIPEMD160);
+        xmlSignatureAlgorithmMap.put(
+                Constants.XML.SignatureAlgorithm.RSA_SHA1,
+                Constants.XML.SignatureAlgorithmURI.RSA_SHA1);
+        xmlSignatureAlgorithmMap.put(
+                Constants.XML.SignatureAlgorithm.RSA_SHA256,
+                Constants.XML.SignatureAlgorithmURI.RSA_SHA256);
+        xmlSignatureAlgorithmMap.put(
+                Constants.XML.SignatureAlgorithm.RSA_SHA384,
+                Constants.XML.SignatureAlgorithmURI.RSA_SHA384);
+        xmlSignatureAlgorithmMap.put(
+                Constants.XML.SignatureAlgorithm.RSA_SHA512,
+                Constants.XML.SignatureAlgorithmURI.RSA_SHA512);
+        xmlSignatureAlgorithms = Collections.unmodifiableMap(xmlSignatureAlgorithmMap);
+
+        Map<String, String> xmlDigestAlgorithmMap = new LinkedHashMap<>();
+        xmlDigestAlgorithmMap.put(Constants.XML.DigestAlgorithm.MD5,
+                                  Constants.XML.DigestAlgorithmURI.MD5);
+        xmlDigestAlgorithmMap.put(Constants.XML.DigestAlgorithm.RIPEMD160,
+                                  Constants.XML.DigestAlgorithmURI.RIPEMD160);
+        xmlDigestAlgorithmMap.put(Constants.XML.DigestAlgorithm.SHA1,
+                                  Constants.XML.DigestAlgorithmURI.SHA1);
+        xmlDigestAlgorithmMap.put(Constants.XML.DigestAlgorithm.SHA256,
+                                  Constants.XML.DigestAlgorithmURI.SHA256);
+        xmlDigestAlgorithmMap.put(Constants.XML.DigestAlgorithm.SHA384,
+                                  Constants.XML.DigestAlgorithmURI.SHA384);
+        xmlDigestAlgorithmMap.put(Constants.XML.DigestAlgorithm.SHA512,
+                                  Constants.XML.DigestAlgorithmURI.SHA512);
+        xmlDigestAlgorithms = Collections.unmodifiableMap(xmlDigestAlgorithmMap);
+    }
 
     private XMLUtils() {
 
@@ -41,6 +98,7 @@ public class XMLUtils {
         return instance;
     }
 
+    // Comment.
     public static Element getDocumentElement(String xmlString) throws IdentityException {
 //
 //        try {
@@ -89,5 +147,25 @@ public class XMLUtils {
 
         return null;
 
+    }
+
+    /**
+     * Get XML Signature Algorithm URI from friendly name.
+     *
+     * @param signatureAlgo signature algorithm friendly name
+     * @return Signature algorithm URI
+     */
+    public String getXmlSignatureAlgorithmURI(String signatureAlgo) {
+        return xmlSignatureAlgorithms.get(signatureAlgo);
+    }
+
+    /**
+     * Get XML Digest Algorithm URI from friendly name.
+     *
+     * @param digestAlgo digest algorithm friendly name
+     * @return Digest algorithm URI
+     */
+    public String getXmlDigestAlgorithmURI(String digestAlgo) {
+        return xmlDigestAlgorithms.get(digestAlgo);
     }
 }

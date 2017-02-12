@@ -215,6 +215,4 @@ public class Constants {
             public static final String SHA512 = "http://www.w3.org/2001/04/xmlenc#sha512";
         }
     }
-
-
 }

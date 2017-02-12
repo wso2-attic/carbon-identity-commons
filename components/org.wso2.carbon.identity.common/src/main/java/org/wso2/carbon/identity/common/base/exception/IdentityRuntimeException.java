@@ -17,7 +17,7 @@
 package org.wso2.carbon.identity.common.base.exception;
 
 /**
- * Used for creating checked exceptions that can be handled.
+ * Used for creating unchecked exceptions that cannot be handled.
  */
 public class IdentityRuntimeException extends RuntimeException {
 
