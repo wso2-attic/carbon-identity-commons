@@ -107,7 +107,7 @@ public class KeyStoreUtils {
     }
 
     /**
-     * Generate thumbprint of certificate.
+     * Decode X509 certificate.
      *
      * @param encodedCert Base64 encoded certificate
      * @return Decoded <code>Certificate</code>
