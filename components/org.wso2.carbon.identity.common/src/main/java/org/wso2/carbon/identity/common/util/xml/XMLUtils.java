@@ -98,7 +98,6 @@ public class XMLUtils {
         return instance;
     }
 
-    // Comment.
     public static Element getDocumentElement(String xmlString) throws IdentityException {
 //
 //        try {
