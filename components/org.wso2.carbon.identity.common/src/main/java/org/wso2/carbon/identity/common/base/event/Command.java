@@ -26,9 +26,7 @@ import org.wso2.carbon.identity.common.base.handler.IdentityEventHandler;
 public class Command {
 
     private IdentityEventHandler identityEventHandler;
-
     private EventContext eventContext;
-
     private Event event;
 
     public Command(IdentityEventHandler identityEventHandler, EventContext eventContext, Event event) {
@@ -51,6 +49,5 @@ public class Command {
 
     public Event getEvent() {
         return event;
-
     }
 }

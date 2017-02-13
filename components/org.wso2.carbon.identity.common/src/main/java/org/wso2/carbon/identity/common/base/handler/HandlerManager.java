@@ -18,6 +18,7 @@ package org.wso2.carbon.identity.common.base.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wso2.carbon.identity.common.base.event.model.Event;
 import org.wso2.carbon.identity.common.base.message.MessageContext;
 
 import java.util.ArrayList;
@@ -120,7 +121,8 @@ public class HandlerManager {
      * @return IdentityMessageHandler : Identity Message Handler
      */
     public <T1 extends MessageHandler, T2 extends MessageContext> T1
-    getFirstPriorityHandler(List<T1> identityMessageHandlers, boolean isEnableHandlersOnly, T2 messageContext) {
+    getFirstPriorityHandler(List<T1> identityMessageHandlers, boolean isEnableHandlersOnly, T2 messageContext, Event
+            event) {
         if (logger.isDebugEnabled()) {
             logger.debug("Get first priority handler for the given handler list and the context");
         }
@@ -134,13 +136,13 @@ public class HandlerManager {
         for (T1 identityHandlerTmp : identityMessageHandlers) {
             if (isEnableHandlersOnly) {
                 if (identityHandlerTmp.isEnabled(messageContext)) {
-                    if (identityHandlerTmp.canHandle(messageContext)) {
+                    if (identityHandlerTmp.canHandle(event, messageContext)) {
                         identityMessageHandler = identityHandlerTmp;
                         break;
                     }
                 }
             } else {
-                if (identityHandlerTmp.canHandle(messageContext)) {
+                if (identityHandlerTmp.canHandle(event, messageContext)) {
                     identityMessageHandler = identityHandlerTmp;
                     break;
                 }

@@ -45,22 +45,20 @@ public final class EventServiceImpl implements EventService {
     }
 
     @Override
-    public void pushEvent(Event event, EventContext eventContext) throws
-            IdentityException {
+    public void pushEvent(Event event, EventContext eventContext) throws IdentityException {
 
         List<AbstractEventHandler> eventHandlerList = EventServiceComponent.EVENT_HANDLER_LIST;
 
         for (final AbstractEventHandler handler : eventHandlerList) {
 
-            if (handler.canHandle(eventContext)) {
+            if (handler.canHandle(event, eventContext)) {
                 if (handler.isAsync()) {
                     eventDistributionTask.addEventToQueue(new Command(handler, eventContext, event));
                 } else {
-                    eventContext.getCommandStack().execute(handler, eventContext, eventContext.getEvent());
+                    eventContext.getCommandStack().execute(handler, eventContext, event);
                 }
             }
         }
-
     }
 
     @Override
@@ -68,6 +66,5 @@ public final class EventServiceImpl implements EventService {
             IdentityException {
 
         eventContext.getCommandStack().execute(handler, eventContext, event);
-
     }
 }

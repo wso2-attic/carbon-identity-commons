@@ -21,22 +21,50 @@ import org.wso2.carbon.identity.common.base.event.model.Event;
 import org.wso2.carbon.identity.common.base.exception.IdentityException;
 
 /**
- *
+ * Interface for identity event handlers.
  */
 public interface IdentityEventHandler {
 
+    /**
+     * Specify whether the handler is synchronous or asynchronous.
+     * @return True if async.
+     */
     default boolean isAsync() {
         return false;
     }
 
+    /**
+     * Handle logic for subscribed events.
+     *
+     * @param eventContext EventContext of the operaion.
+     * @param event Event to be handled.
+     * @throws IdentityException
+     */
     void handle(EventContext eventContext, Event event) throws IdentityException;
 
-    default void
-    rollBack(EventContext eventContext, Event event) throws IdentityException {
+    /**
+     * Rollback logic of the handle operation
+     *
+     * @param eventContext EventContext of the operation.
+     * @param event Event to rollback.
+     * @throws IdentityException
+     */
+    default void rollBack(EventContext eventContext, Event event) throws IdentityException {
 
     }
 
+    /**
+     * Configure handler.
+     *
+     * @param initConfig Configuration related to the handler.
+     * @throws IdentityException If an errors while configuring the handler.
+     */
     void configure(InitConfig initConfig) throws IdentityException;
 
+    /**
+     * Returns handler name.
+     *
+     * @return Handler name.
+     */
     String getName();
 }

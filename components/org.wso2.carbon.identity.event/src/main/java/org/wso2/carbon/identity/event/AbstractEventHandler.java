@@ -39,19 +39,18 @@ public abstract class AbstractEventHandler extends AbstractMessageHandler implem
     private static final Logger logger = LoggerFactory.getLogger(AbstractEventHandler.class);
     protected ModuleConfig moduleConfig;
 
-    public boolean canHandle(MessageContext messageContext) throws IdentityRuntimeException {
+    public boolean canHandle(Event event, MessageContext messageContext) throws IdentityRuntimeException {
 
         if (!(messageContext instanceof EventContext)) {
             return false;
         }
-        Event event = ((EventContext) messageContext).getEvent();
         String eventName = event.getEventName();
         String moduleName = this.getName();
         ConfigParser notificationMgtConfigBuilder;
         try {
             notificationMgtConfigBuilder = ConfigParser.getInstance();
         } catch (EventException e) {
-            logger.error("Error while retrieving event mgt config builder", e);
+            logger.error("Error while retrieving event mgt config builder.", e);
             return false;
         }
         List<Subscription> subscriptionList = null;
@@ -69,11 +68,6 @@ public abstract class AbstractEventHandler extends AbstractMessageHandler implem
         return false;
     }
 
-    /**
-     *
-     * @param eventContext
-     * @throws EventException
-     */
     @Override
     public abstract void handle(EventContext eventContext, Event event) throws EventException;
 

@@ -33,8 +33,7 @@ public interface EventService {
      * @param eventContext EventContext.
      * @throws IdentityException If an error occurs during event handling.
      */
-    void pushEvent(Event event, EventContext eventContext) throws
-            IdentityException;
+    void pushEvent(Event event, EventContext eventContext) throws IdentityException;
 
     /**
      * Executes handle logic for a given event and message context.

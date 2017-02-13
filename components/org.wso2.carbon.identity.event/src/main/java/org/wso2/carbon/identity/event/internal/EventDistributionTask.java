@@ -81,12 +81,13 @@ public class EventDistributionTask implements Runnable {
                 // Create a runnable and submit to the thread pool for sending message.
                 Runnable msgSender = () -> {
                     if (logger.isDebugEnabled()) {
-                        logger.debug("Executing " + handler.getName() + " on event" + event.getEventName());
+                        logger.debug("Executing handler: " + handler.getName() + " on event: " + event.getEventName());
                     }
                     try {
                         handler.handle(eventMessageContext, event);
                     } catch (IdentityException e) {
-                        logger.error("Error while invoking handler " + handler.getName(), e);
+                        logger.error("Error while invoking handler: " + handler.getName() + " on event: " + event
+                                .getEventName(), e);
                     }
                 };
                 Future future = EventDataHolder.getInstance().getThreadPool().submit(msgSender);

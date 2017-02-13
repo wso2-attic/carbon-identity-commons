@@ -19,6 +19,7 @@ package org.wso2.carbon.identity.common.base.handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.identity.common.base.Constants;
+import org.wso2.carbon.identity.common.base.event.model.Event;
 import org.wso2.carbon.identity.common.base.message.MessageContext;
 import org.wso2.carbon.identity.common.internal.handler.HandlerConfig;
 import org.wso2.carbon.identity.common.internal.handler.HandlerConfigKey;
@@ -84,7 +85,7 @@ public abstract class AbstractMessageHandler implements MessageHandler {
         return identityEventListenerConfig.getOrder();
     }
 
-    public boolean canHandle(MessageContext messageContext) {
+    public boolean canHandle(Event event, MessageContext messageContext) {
         return false;
     }
 

@@ -31,7 +31,6 @@ import org.wso2.carbon.identity.common.base.handler.InitConfig;
 public abstract class ResultReturningHandler<T extends Object, X extends Exception> implements IdentityEventHandler {
 
     private T result;
-
     private X ex;
 
     public T getResult() throws X {
