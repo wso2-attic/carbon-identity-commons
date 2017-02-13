@@ -75,7 +75,7 @@ public abstract class AbstractEventHandler extends AbstractMessageHandler implem
      * @throws EventException
      */
     @Override
-    public abstract void handleEvent(EventContext eventContext) throws EventException;
+    public abstract void handle(EventContext eventContext, Event event) throws EventException;
 
     @Override
     public void init(InitConfig configuration) throws IdentityRuntimeException {

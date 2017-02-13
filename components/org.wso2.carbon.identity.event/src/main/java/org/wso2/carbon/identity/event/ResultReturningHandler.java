@@ -17,6 +17,7 @@
 package org.wso2.carbon.identity.event;
 
 import org.wso2.carbon.identity.common.base.event.EventContext;
+import org.wso2.carbon.identity.common.base.event.model.Event;
 import org.wso2.carbon.identity.common.base.exception.IdentityException;
 import org.wso2.carbon.identity.common.base.handler.IdentityEventHandler;
 import org.wso2.carbon.identity.common.base.handler.InitConfig;
@@ -41,12 +42,12 @@ public abstract class ResultReturningHandler<T extends Object, X extends Excepti
         return result;
     }
 
-    public abstract <X1 extends Exception> T handleEventWithResult(EventContext eventContext) throws X1;
+    public abstract <X1 extends Exception> T handleEventWithResult(EventContext eventContext, Event event) throws X1;
 
     @Override
-    public void handleEvent(EventContext eventContext) throws IdentityException {
+    public void handle(EventContext eventContext, Event event) throws IdentityException {
         try {
-            result = handleEventWithResult(eventContext);
+            result = handleEventWithResult(eventContext, event);
         } catch (Exception x) {
             ex = (X) x;
         }

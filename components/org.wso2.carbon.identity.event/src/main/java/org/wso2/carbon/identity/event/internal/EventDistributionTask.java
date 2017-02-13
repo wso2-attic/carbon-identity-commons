@@ -84,7 +84,7 @@ public class EventDistributionTask implements Runnable {
                         logger.debug("Executing " + handler.getName() + " on event" + event.getEventName());
                     }
                     try {
-                        handler.handleEvent(eventMessageContext);
+                        handler.handle(eventMessageContext, event);
                     } catch (IdentityException e) {
                         logger.error("Error while invoking handler " + handler.getName(), e);
                     }

@@ -21,14 +21,11 @@ import org.slf4j.LoggerFactory;
 import org.wso2.carbon.identity.common.base.event.Command;
 import org.wso2.carbon.identity.common.base.event.EventContext;
 import org.wso2.carbon.identity.common.base.event.model.Event;
-import org.wso2.carbon.identity.common.base.event.model.EventHandlerBean;
 import org.wso2.carbon.identity.common.base.exception.IdentityException;
 import org.wso2.carbon.identity.common.base.handler.IdentityEventHandler;
 import org.wso2.carbon.identity.event.AbstractEventHandler;
 import org.wso2.carbon.identity.event.EventService;
-import org.wso2.carbon.kernel.utils.LambdaExceptionUtils;
 
-import java.util.Deque;
 import java.util.List;
 
 /**
@@ -40,42 +37,42 @@ public final class EventServiceImpl implements EventService {
     private EventDistributionTask eventDistributionTask;
 
     public EventServiceImpl(List<AbstractEventHandler> handlerList, int threadPoolSize) {
-        this.eventDistributionTask = new EventDistributionTask(handlerList, threadPoolSize);
-        if (logger.isDebugEnabled()) {
-            logger.debug("Starting event distribution task from Notification Management component");
-        }
-        new Thread(eventDistributionTask).start();
+//        this.eventDistributionTask = new EventDistributionTask(handlerList, threadPoolSize);
+//        if (logger.isDebugEnabled()) {
+//            logger.debug("Starting event distribution task from Notification Management component");
+//        }
+//        new Thread(eventDistributionTask).start();
     }
 
     @Override
     public void handleEvent(EventContext eventContext) throws IdentityException {
 
-        List<AbstractEventHandler> eventHandlerList = EventServiceComponent.EVENT_HANDLER_LIST;
-
-        for (final AbstractEventHandler handler : eventHandlerList) {
-
-            if (handler.canHandle(eventContext)) {
-                if (handler.isAsync()) {
-//                    eventDistributionTask.addEventToQueue(eventContext);
-                } else {
-                    eventContext.addToEventHandlerStack(handler);
-                    handler.handleEvent(eventContext);
-                }
-            }
-        }
+//        List<AbstractEventHandler> eventHandlerList = EventServiceComponent.EVENT_HANDLER_LIST;
+//
+//        for (final AbstractEventHandler handler : eventHandlerList) {
+//
+//            if (handler.canHandle(eventContext)) {
+//                if (handler.isAsync()) {
+////                    eventDistributionTask.addEventToQueue(eventContext);
+//                } else {
+//                    eventContext.addToEventHandlerStack(handler);
+//                    handler.handle(eventContext);
+//                }
+//            }
+//        }
     }
 
 
     @Override
     public void rollbackEvent(EventContext eventContext) throws IdentityException {
 
-        Deque<EventHandlerBean> eventHandlerStack = eventContext.getEventHandlerStack();
-
-        eventHandlerStack.forEach(LambdaExceptionUtils.rethrowConsumer(eventHandlerBean -> {
-
-            eventContext.setEvent(eventHandlerBean.getEvent());
-            eventHandlerBean.getHandler().rollBack(eventContext);
-        }));
+//        Deque<EventHandlerBean> eventHandlerStack = eventContext.getEventHandlerStack();
+//
+//        eventHandlerStack.forEach(LambdaExceptionUtils.rethrowConsumer(eventHandlerBean -> {
+//
+//            eventContext.setEvent(eventHandlerBean.getEvent());
+//            eventHandlerBean.getHandler().rollBack(eventContext);
+//        }));
 
     }
 

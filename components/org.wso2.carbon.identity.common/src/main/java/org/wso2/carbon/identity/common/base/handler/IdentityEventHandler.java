@@ -17,6 +17,7 @@
 package org.wso2.carbon.identity.common.base.handler;
 
 import org.wso2.carbon.identity.common.base.event.EventContext;
+import org.wso2.carbon.identity.common.base.event.model.Event;
 import org.wso2.carbon.identity.common.base.exception.IdentityException;
 
 /**
@@ -28,14 +29,14 @@ public interface IdentityEventHandler {
         return false;
     }
 
-    //TODO handle or handleEvent
-    void handleEvent(EventContext eventContext) throws IdentityException;
+    void handle(EventContext eventContext, Event event) throws IdentityException;
 
-    default void rollBack(EventContext eventContext) throws IdentityException {
+    default void
+    rollBack(EventContext eventContext, Event event) throws IdentityException {
 
     }
 
     void configure(InitConfig initConfig) throws IdentityException;
 
-    public String getName();
+    String getName();
 }

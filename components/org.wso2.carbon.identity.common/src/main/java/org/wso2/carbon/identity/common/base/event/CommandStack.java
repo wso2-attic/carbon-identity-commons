@@ -16,6 +16,8 @@
 
 package org.wso2.carbon.identity.common.base.event;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wso2.carbon.identity.common.base.event.model.Event;
 import org.wso2.carbon.identity.common.base.exception.IdentityException;
 import org.wso2.carbon.identity.common.base.handler.IdentityEventHandler;
@@ -29,6 +31,7 @@ import java.util.Deque;
  */
 public class CommandStack {
 
+    private static final Logger log = LoggerFactory.getLogger(CommandStack.class);
     private Deque<Command> commandsStack = new ArrayDeque<>();
 
     public void execute(IdentityEventHandler handler, EventContext eventContext, Event event) throws IdentityException {
@@ -37,8 +40,7 @@ public class CommandStack {
         commandsStack.add(command);
 
         try {
-
-            handler.handleEvent(eventContext);
+            handler.handle(eventContext, event);
 
         } catch (IdentityException e) {
             this.rollback();
@@ -48,14 +50,31 @@ public class CommandStack {
 
     public void rollback() throws IdentityException {
 
+        IdentityException identityException = null;
+        String message = "Error(s) occurred while executing rollback operation of: ";
+
         while (!commandsStack.isEmpty()) {
-
+            Command command = commandsStack.pop();
             try {
-                commandsStack.pop().rollback();
+                command.rollback();
             } catch (IdentityException e) {
-                //TODO log and continue. Suppress exceptions and throw. Concat a list of failed handlers.
-            }
 
+                if (identityException == null) {
+                    identityException = new IdentityException(e);
+                } else {
+
+                    identityException.addSuppressed(e);
+                }
+
+                String failure = String.format("%s for event: %s", command.getIdentityEventHandler().getName(),
+                                               command.getEvent().getEventName());
+                log.error("Error during rollback operation of handler: " + failure, e);
+                message = message.concat(failure + "\n");
+            }
+        }
+
+        if (identityException != null) {
+            throw new IdentityException(message, identityException);
         }
 
     }
