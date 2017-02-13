@@ -37,43 +37,11 @@ public final class EventServiceImpl implements EventService {
     private EventDistributionTask eventDistributionTask;
 
     public EventServiceImpl(List<AbstractEventHandler> handlerList, int threadPoolSize) {
-//        this.eventDistributionTask = new EventDistributionTask(handlerList, threadPoolSize);
-//        if (logger.isDebugEnabled()) {
-//            logger.debug("Starting event distribution task from Notification Management component");
-//        }
-//        new Thread(eventDistributionTask).start();
-    }
-
-    @Override
-    public void handleEvent(EventContext eventContext) throws IdentityException {
-
-//        List<AbstractEventHandler> eventHandlerList = EventServiceComponent.EVENT_HANDLER_LIST;
-//
-//        for (final AbstractEventHandler handler : eventHandlerList) {
-//
-//            if (handler.canHandle(eventContext)) {
-//                if (handler.isAsync()) {
-////                    eventDistributionTask.addEventToQueue(eventContext);
-//                } else {
-//                    eventContext.addToEventHandlerStack(handler);
-//                    handler.handle(eventContext);
-//                }
-//            }
-//        }
-    }
-
-
-    @Override
-    public void rollbackEvent(EventContext eventContext) throws IdentityException {
-
-//        Deque<EventHandlerBean> eventHandlerStack = eventContext.getEventHandlerStack();
-//
-//        eventHandlerStack.forEach(LambdaExceptionUtils.rethrowConsumer(eventHandlerBean -> {
-//
-//            eventContext.setEvent(eventHandlerBean.getEvent());
-//            eventHandlerBean.getHandler().rollBack(eventContext);
-//        }));
-
+        this.eventDistributionTask = new EventDistributionTask(handlerList, threadPoolSize);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Starting event distribution task from Notification Management component");
+        }
+        new Thread(eventDistributionTask).start();
     }
 
     @Override

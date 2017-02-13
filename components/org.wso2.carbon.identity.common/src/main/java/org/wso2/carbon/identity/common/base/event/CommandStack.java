@@ -25,7 +25,6 @@ import org.wso2.carbon.identity.common.base.handler.IdentityEventHandler;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-/**
  /**
  * Command stack for event handling.
  */
@@ -41,11 +40,9 @@ public class CommandStack {
 
         try {
             handler.handle(eventContext, event);
-
         } catch (IdentityException e) {
             this.rollback();
         }
-
     }
 
     public void rollback() throws IdentityException {
@@ -58,11 +55,10 @@ public class CommandStack {
             try {
                 command.rollback();
             } catch (IdentityException e) {
-
+                //Suppress all the exceptions of rollback failures to a single exception.
                 if (identityException == null) {
                     identityException = new IdentityException(e);
                 } else {
-
                     identityException.addSuppressed(e);
                 }
 

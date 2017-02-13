@@ -31,7 +31,6 @@ public class Command {
 
     private Event event;
 
-
     public Command(IdentityEventHandler identityEventHandler, EventContext eventContext, Event event) {
         this.identityEventHandler = identityEventHandler;
         this.eventContext = eventContext;

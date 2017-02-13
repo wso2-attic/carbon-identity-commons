@@ -27,22 +27,6 @@ import org.wso2.carbon.identity.common.base.handler.IdentityEventHandler;
 public interface EventService {
 
     /**
-     * Executes handle logic for a given MessageContext.
-     *
-     * @param eventContext EventContext.
-     * @throws IdentityException If an error occurs during event handling.
-     */
-    void handleEvent(EventContext eventContext) throws IdentityException;
-
-    /**
-     * Executes rollback logic for a given MessageContext.
-     *
-     * @param eventContext EventContext.
-     * @throws IdentityException If an error occurs during rollback.
-     */
-    void rollbackEvent(EventContext eventContext) throws IdentityException;
-
-    /**
      * Executes handle logic for a given event and message context.
      *
      * @param event Event.
