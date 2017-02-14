@@ -16,6 +16,7 @@
 
 package org.wso2.carbon.identity.common.base.handler;
 
+import org.wso2.carbon.identity.common.base.event.model.Event;
 import org.wso2.carbon.identity.common.base.message.MessageContext;
 
 /**
@@ -56,5 +57,5 @@ public interface MessageHandler {
      * @param messageContext The runtime message context
      * @return if the message can be handled by this handler
      */
-    public boolean canHandle(MessageContext messageContext);
+    public boolean canHandle(Event event, MessageContext messageContext);
 }

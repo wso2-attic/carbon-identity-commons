@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,28 +14,22 @@
  * limitations under the License.
  */
 
-package org.wso2.carbon.identity.event;
+package org.wso2.carbon.identity.common.base.event;
 
+import org.wso2.carbon.identity.common.base.event.model.Event;
 import org.wso2.carbon.identity.common.base.message.MessageContext;
-import org.wso2.carbon.identity.event.model.Event;
-import org.wso2.carbon.identity.event.model.EventHandlerBean;
-
-import java.util.ArrayDeque;
-import java.util.Deque;
 
 /**
  * Event message context.
  */
-public class EventMessageContext extends MessageContext {
+public class EventContext extends MessageContext {
 
     private Event event;
+    private CommandStack commandStack = new CommandStack();
 
-    private Deque<EventHandlerBean> handlerDeque = new ArrayDeque<>();
-
-    public EventMessageContext(Event event) {
+    public EventContext(Event event) {
         super();
         this.event = event;
-
     }
 
     public Event getEvent() {
@@ -46,12 +40,7 @@ public class EventMessageContext extends MessageContext {
         this.event = event;
     }
 
-    public Deque<EventHandlerBean> getEventHandlerStack() {
-        return handlerDeque;
+    public CommandStack getCommandStack() {
+        return commandStack;
     }
-
-    public void addToEventHandlerStack(AbstractEventHandler handler) {
-        handlerDeque.add(new EventHandlerBean(this.event, handler));
-    }
-
 }

@@ -18,84 +18,63 @@ package org.wso2.carbon.identity.event;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wso2.carbon.identity.common.base.event.EventContext;
+import org.wso2.carbon.identity.common.base.event.model.Event;
 import org.wso2.carbon.identity.common.base.exception.IdentityRuntimeException;
 import org.wso2.carbon.identity.common.base.handler.AbstractMessageHandler;
+import org.wso2.carbon.identity.common.base.handler.IdentityEventHandler;
 import org.wso2.carbon.identity.common.base.handler.InitConfig;
 import org.wso2.carbon.identity.common.base.message.MessageContext;
 import org.wso2.carbon.identity.event.internal.ConfigParser;
-import org.wso2.carbon.identity.event.model.Event;
 import org.wso2.carbon.identity.event.model.ModuleConfig;
 import org.wso2.carbon.identity.event.model.Subscription;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Abstract Event Handler class.
  */
-public abstract class AbstractEventHandler extends AbstractMessageHandler {
+public abstract class AbstractEventHandler extends AbstractMessageHandler implements IdentityEventHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractEventHandler.class);
     protected ModuleConfig moduleConfig;
 
-    public boolean canHandle(MessageContext messageContext) throws IdentityRuntimeException {
+    public boolean canHandle(Event event, MessageContext messageContext) throws IdentityRuntimeException {
 
-        Event event = ((EventMessageContext) messageContext).getEvent();
+        if (!(messageContext instanceof EventContext)) {
+            return false;
+        }
         String eventName = event.getEventName();
         String moduleName = this.getName();
         ConfigParser notificationMgtConfigBuilder;
         try {
             notificationMgtConfigBuilder = ConfigParser.getInstance();
         } catch (EventException e) {
-            logger.error("Error while retrieving event mgt config builder", e);
+            logger.error("Error while retrieving event mgt config builder.", e);
             return false;
         }
         List<Subscription> subscriptionList = null;
+        //TODO see whether this can be removed.
         ModuleConfig moduleConfig = notificationMgtConfigBuilder.getModuleConfigurations(moduleName);
         if (moduleConfig != null) {
             subscriptionList = moduleConfig.getSubscriptions();
         }
+
         if (subscriptionList != null) {
-            for (Subscription subscription : subscriptionList) {
-                if (subscription.getSubscriptionName().equals(eventName)) {
-                    return true;
-                }
-            }
+            return subscriptionList.stream()
+                                   .anyMatch(sub -> sub.getSubscriptionName().equals(eventName));
         }
 
         return false;
     }
 
-    public boolean isAssociationAsync(String eventName) throws EventException {
-
-        Map<String, ModuleConfig> moduleConfigurationList = ConfigParser.getInstance()
-                .getModuleConfiguration();
-        ModuleConfig moduleConfig = moduleConfigurationList.get(this.getName());
-        List<Subscription> subscriptions = moduleConfig.getSubscriptions();
-
-        for (Subscription sub : subscriptions) {
-            if (sub.getSubscriptionName().equals(eventName)) {
-                continue;
-            }
-            return Boolean.parseBoolean(sub.getSubscriptionProperties().getProperty(this.getName() + ".subscription."
-                    + eventName + "" + ".operationAsync"));
-        }
-        return false;
-    }
-
-    public abstract void handleEvent(EventMessageContext eventMessageContext) throws EventException;
-
-    /**
-     * Rollback opreation of the handler.
-     *
-     * @param messageContext The runtime message context.
-     */
-    public abstract void rollBack(MessageContext messageContext);
+    @Override
+    public abstract void handle(EventContext eventContext, Event event) throws EventException;
 
     @Override
     public void init(InitConfig configuration) throws IdentityRuntimeException {
 
-        if (configuration instanceof  ModuleConfig) {
+        if (configuration instanceof ModuleConfig) {
             this.moduleConfig = (ModuleConfig) configuration;
         }
     }

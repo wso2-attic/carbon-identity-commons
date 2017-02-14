@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package org.wso2.carbon.identity.event.model;
+package org.wso2.carbon.identity.common.base.event.model;
 
-import org.wso2.carbon.identity.event.AbstractEventHandler;
+import org.wso2.carbon.identity.common.base.handler.IdentityEventHandler;
 
 /**
  * Represents event handler bean.
@@ -25,9 +25,9 @@ public class EventHandlerBean {
 
     private Event event;
 
-    private AbstractEventHandler handler;
+    private IdentityEventHandler handler;
 
-    public EventHandlerBean(Event event, AbstractEventHandler handler) {
+    public EventHandlerBean(Event event, IdentityEventHandler handler) {
         this.event = event;
         this.handler = handler;
     }
@@ -36,7 +36,7 @@ public class EventHandlerBean {
         return event;
     }
 
-    public AbstractEventHandler getHandler() {
+    public IdentityEventHandler getHandler() {
         return handler;
     }
 }

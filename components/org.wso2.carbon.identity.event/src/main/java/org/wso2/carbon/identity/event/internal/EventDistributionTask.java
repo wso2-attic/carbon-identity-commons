@@ -18,10 +18,12 @@ package org.wso2.carbon.identity.event.internal;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wso2.carbon.identity.common.base.event.Command;
+import org.wso2.carbon.identity.common.base.event.EventContext;
+import org.wso2.carbon.identity.common.base.event.model.Event;
+import org.wso2.carbon.identity.common.base.exception.IdentityException;
+import org.wso2.carbon.identity.common.base.handler.IdentityEventHandler;
 import org.wso2.carbon.identity.event.AbstractEventHandler;
-import org.wso2.carbon.identity.event.EventException;
-import org.wso2.carbon.identity.event.EventMessageContext;
-import org.wso2.carbon.identity.event.model.Event;
 
 import java.util.List;
 import java.util.concurrent.BlockingDeque;
@@ -40,7 +42,7 @@ public class EventDistributionTask implements Runnable {
     /**
      * Queue used to add events by publishers.
      */
-    private BlockingDeque<EventMessageContext> eventQueue;
+    private BlockingDeque<Command> eventQueue;
     /**
      * Registered message sending modules.
      */
@@ -62,8 +64,8 @@ public class EventDistributionTask implements Runnable {
         EventDataHolder.getInstance().setThreadPool(Executors.newFixedThreadPool(threadPoolSize));
     }
 
-    public void addEventToQueue(EventMessageContext publisherEvent) {
-        this.eventQueue.add(publisherEvent);
+    public void addEventToQueue(Command command) {
+        this.eventQueue.add(command);
     }
 
     @Override
@@ -72,30 +74,27 @@ public class EventDistributionTask implements Runnable {
         // Run forever until stop the bundle. Will stop in eventQueue.take()
         while (running) {
             try {
-                final EventMessageContext eventMessageContext = eventQueue.take();
-                Event event = eventMessageContext.getEvent();
-                for (final AbstractEventHandler module : notificationSendingModules) {
-                    // If the module is subscribed to the event, module will be executed.
-                    if (module.isEnabled(eventMessageContext)) {
-                        // Create a runnable and submit to the thread pool for sending message.
-                        Runnable msgSender = () -> {
-                            if (logger.isDebugEnabled()) {
-                                logger.debug("Executing " + module.getName() + " on event" + event.
-                                        getEventName());
-                            }
-                            try {
-                                module.handleEvent(eventMessageContext);
-                            } catch (EventException e) {
-                                logger.error("Error while invoking notification sending module " + module.
-                                        getName(), e);
-                            }
-                        };
-                        Future future = EventDataHolder.getInstance().getThreadPool().submit(msgSender);
-                        if (logger.isDebugEnabled()) {
-                            logger.debug("Task is done: " + future.isDone());
-                        }
+                final Command command = eventQueue.take();
+                final EventContext eventMessageContext = command.getEventContext();
+                Event event = command.getEvent();
+                IdentityEventHandler handler = command.getIdentityEventHandler();
+                // Create a runnable and submit to the thread pool for sending message.
+                Runnable msgSender = () -> {
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("Executing handler: " + handler.getName() + " on event: " + event.getEventName());
                     }
+                    try {
+                        handler.handle(eventMessageContext, event);
+                    } catch (IdentityException e) {
+                        logger.error("Error while invoking handler: " + handler.getName() + " on event: " + event
+                                .getEventName(), e);
+                    }
+                };
+                Future future = EventDataHolder.getInstance().getThreadPool().submit(msgSender);
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Task is done: " + future.isDone());
                 }
+
             } catch (InterruptedException e) {
                 logger.error("Error while picking up event from event queue", e);
             }
