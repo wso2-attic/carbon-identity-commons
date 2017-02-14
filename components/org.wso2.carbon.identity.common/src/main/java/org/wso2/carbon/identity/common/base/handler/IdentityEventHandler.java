@@ -43,13 +43,13 @@ public interface IdentityEventHandler {
     void handle(EventContext eventContext, Event event) throws IdentityException;
 
     /**
-     * Rollback logic of the handle operation
+     * Rollback logic of the handle operation to execute during faulty conditions.
      *
      * @param eventContext EventContext of the operation.
      * @param event Event to rollback.
      * @throws IdentityException
      */
-    default void rollBack(EventContext eventContext, Event event) throws IdentityException {
+    default void onFault(EventContext eventContext, Event event) throws IdentityException {
 
     }
 

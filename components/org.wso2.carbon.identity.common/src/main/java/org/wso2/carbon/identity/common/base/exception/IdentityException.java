@@ -138,9 +138,9 @@ public class IdentityException extends Exception {
 //        return exception;
 //    }
 //
-//    public String getErrorCode() {
-//        return errorCode;
-//    }
+    public String getErrorCode() {
+        return errorCode;
+    }
 //
 //    public void setErrorCode(String errorCode) {
 //        this.errorCode = errorCode;

@@ -36,7 +36,7 @@ public class Command {
     }
 
     public void rollback() throws IdentityException {
-        identityEventHandler.rollBack(eventContext, event);
+        identityEventHandler.onFault(eventContext, event);
     }
 
     public EventContext getEventContext() {
