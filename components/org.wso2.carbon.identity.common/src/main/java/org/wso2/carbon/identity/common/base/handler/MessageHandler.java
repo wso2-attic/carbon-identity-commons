@@ -16,7 +16,6 @@
 
 package org.wso2.carbon.identity.common.base.handler;
 
-import org.wso2.carbon.identity.common.base.event.model.Event;
 import org.wso2.carbon.identity.common.base.message.MessageContext;
 
 /**
@@ -50,12 +49,4 @@ public interface MessageHandler {
      * @return The priority value of the handler
      */
     public int getPriority(MessageContext messageContext);
-
-    /**
-     * Tells if this request can be handled by this handler.
-     *
-     * @param messageContext The runtime message context
-     * @return if the message can be handled by this handler
-     */
-    public boolean canHandle(Event event, MessageContext messageContext);
 }

@@ -48,7 +48,7 @@ public class CommandStack {
     public void rollback() throws IdentityException {
 
         IdentityException identityException = null;
-        String message = "Error(s) occurred while executing rollback operation(s) of ";
+        StringBuilder builder = new StringBuilder("Error(s) occurred while executing rollback operation(s) of ");
 
         while (!commandsStack.isEmpty()) {
             Command command = commandsStack.pop();
@@ -65,12 +65,12 @@ public class CommandStack {
                 String failure = String.format("handler: %s for event: %s", command.getIdentityEventHandler().getName(),
                                                command.getEvent().getEventName());
                 log.error("Error during rollback operation of " + failure, e);
-                message = message.concat(failure + "\n");
+                builder.append(failure).append("\n");
             }
         }
 
         if (identityException != null) {
-            throw new IdentityException(message, identityException);
+            throw new IdentityException(builder.toString(), identityException);
         }
 
     }
