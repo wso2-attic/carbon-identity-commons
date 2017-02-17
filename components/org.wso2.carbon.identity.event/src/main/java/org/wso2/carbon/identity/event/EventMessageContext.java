@@ -28,9 +28,13 @@ import java.util.Deque;
  */
 public class EventMessageContext extends MessageContext {
 
-    private Event event;
-
+    private static final long serialVersionUID = -2509104011360605018L;
+    private transient Event event = null;
     private Deque<EventHandlerBean> handlerDeque = new ArrayDeque<>();
+
+    public Deque<EventHandlerBean> getHandlerDeque() {
+        return handlerDeque;
+    }
 
     public EventMessageContext(Event event) {
         super();
@@ -48,6 +52,10 @@ public class EventMessageContext extends MessageContext {
 
     public Deque<EventHandlerBean> getEventHandlerStack() {
         return handlerDeque;
+    }
+
+    public void setHandlerDeque(Deque<EventHandlerBean> handlerDeque) {
+        this.handlerDeque = handlerDeque;
     }
 
     public void addToEventHandlerStack(AbstractEventHandler handler) {

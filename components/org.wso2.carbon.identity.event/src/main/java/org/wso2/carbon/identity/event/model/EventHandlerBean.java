@@ -18,14 +18,17 @@ package org.wso2.carbon.identity.event.model;
 
 import org.wso2.carbon.identity.event.AbstractEventHandler;
 
+import java.io.Serializable;
+
 /**
  * Represents event handler bean.
  */
-public class EventHandlerBean {
+public class EventHandlerBean implements Serializable {
 
-    private Event event;
+    private static final long serialVersionUID = 9170733437179825990L;
+    private transient Event event = null;
 
-    private AbstractEventHandler handler;
+    private transient AbstractEventHandler handler = null;
 
     public EventHandlerBean(Event event, AbstractEventHandler handler) {
         this.event = event;
