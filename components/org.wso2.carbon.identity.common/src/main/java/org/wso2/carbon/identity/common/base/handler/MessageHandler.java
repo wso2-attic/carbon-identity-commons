@@ -27,20 +27,20 @@ public interface MessageHandler {
      * Initializes the handler.
      * @param initConfig : initConfig
      */
-    public void init(InitConfig initConfig);
+    void init(InitConfig initConfig);
 
     /**
      * Name of the handler.
      * @return Name of the handler
      */
-    public String getName();
+    String getName();
 
     /**
      * Tells if the handler is enabled or not.
      * @param messageContext The runtime message context
      * @return : enable
      */
-    public boolean isEnabled(MessageContext messageContext);
+    boolean isEnabled(MessageContext messageContext);
 
     /**
      * Used to sort the set of handlers.
@@ -48,5 +48,5 @@ public interface MessageHandler {
      * @param messageContext The runtime message context.
      * @return The priority value of the handler
      */
-    public int getPriority(MessageContext messageContext);
+    int getPriority(MessageContext messageContext);
 }
