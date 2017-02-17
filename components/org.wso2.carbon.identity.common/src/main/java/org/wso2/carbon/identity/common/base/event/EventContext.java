@@ -16,7 +16,6 @@
 
 package org.wso2.carbon.identity.common.base.event;
 
-import org.wso2.carbon.identity.common.base.event.model.Event;
 import org.wso2.carbon.identity.common.base.message.MessageContext;
 
 /**
@@ -24,21 +23,7 @@ import org.wso2.carbon.identity.common.base.message.MessageContext;
  */
 public class EventContext extends MessageContext {
 
-    private Event event;
     private CommandStack commandStack = new CommandStack();
-
-    public EventContext(Event event) {
-        super();
-        this.event = event;
-    }
-
-    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
-    }
 
     public CommandStack getCommandStack() {
         return commandStack;

@@ -16,7 +16,6 @@
 
 package org.wso2.carbon.identity.common.base.handler;
 
-import org.wso2.carbon.identity.common.base.event.model.Event;
 import org.wso2.carbon.identity.common.base.message.MessageContext;
 
 /**
@@ -28,20 +27,20 @@ public interface MessageHandler {
      * Initializes the handler.
      * @param initConfig : initConfig
      */
-    public void init(InitConfig initConfig);
+    void init(InitConfig initConfig);
 
     /**
      * Name of the handler.
      * @return Name of the handler
      */
-    public String getName();
+    String getName();
 
     /**
      * Tells if the handler is enabled or not.
      * @param messageContext The runtime message context
      * @return : enable
      */
-    public boolean isEnabled(MessageContext messageContext);
+    boolean isEnabled(MessageContext messageContext);
 
     /**
      * Used to sort the set of handlers.
@@ -49,13 +48,5 @@ public interface MessageHandler {
      * @param messageContext The runtime message context.
      * @return The priority value of the handler
      */
-    public int getPriority(MessageContext messageContext);
-
-    /**
-     * Tells if this request can be handled by this handler.
-     *
-     * @param messageContext The runtime message context
-     * @return if the message can be handled by this handler
-     */
-    public boolean canHandle(Event event, MessageContext messageContext);
+    int getPriority(MessageContext messageContext);
 }

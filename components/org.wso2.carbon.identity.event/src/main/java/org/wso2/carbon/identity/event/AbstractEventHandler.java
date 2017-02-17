@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.identity.common.base.event.EventContext;
 import org.wso2.carbon.identity.common.base.event.model.Event;
+import org.wso2.carbon.identity.common.base.exception.IdentityException;
 import org.wso2.carbon.identity.common.base.exception.IdentityRuntimeException;
 import org.wso2.carbon.identity.common.base.handler.AbstractMessageHandler;
 import org.wso2.carbon.identity.common.base.handler.IdentityEventHandler;
@@ -69,7 +70,7 @@ public abstract class AbstractEventHandler extends AbstractMessageHandler implem
     }
 
     @Override
-    public abstract void handle(EventContext eventContext, Event event) throws EventException;
+    public abstract void handle(EventContext eventContext, Event event) throws IdentityException;
 
     @Override
     public void init(InitConfig configuration) throws IdentityRuntimeException {
