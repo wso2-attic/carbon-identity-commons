@@ -23,7 +23,12 @@ import org.wso2.carbon.identity.common.base.message.MessageContext;
  */
 public class EventContext extends MessageContext {
 
-    private CommandStack commandStack = new CommandStack();
+    private static final long serialVersionUID = 9187966288067915409L;
+    private transient CommandStack commandStack = null;
+
+    public  EventContext() {
+        commandStack = new CommandStack();
+    }
 
     public CommandStack getCommandStack() {
         return commandStack;
