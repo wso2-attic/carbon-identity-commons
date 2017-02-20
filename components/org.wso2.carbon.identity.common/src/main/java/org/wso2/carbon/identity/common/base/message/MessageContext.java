@@ -18,6 +18,7 @@ package org.wso2.carbon.identity.common.base.message;
 
 import org.wso2.carbon.identity.common.base.exception.IdentityRuntimeException;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,8 +28,9 @@ import java.util.Map;
  * @param <T1> : key
  * @param <T2> : Value
  */
-public abstract class MessageContext<T1 extends Object, T2 extends Object> {
+public abstract class MessageContext<T1 extends Object, T2 extends Object> implements Serializable {
 
+    private static final long serialVersionUID = 4937506590904486749L;
     protected Map<T1, T2> parameters = new HashMap();
 
     public MessageContext(Map<T1, T2> parameters) {
