@@ -23,9 +23,11 @@ import org.wso2.carbon.identity.common.base.exception.IdentityException;
 import org.wso2.carbon.identity.common.base.handler.IdentityEventHandler;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
+import java.util.List;
 
- /**
+/**
  * Command stack for event handling.
  */
 public class CommandStack {
@@ -41,14 +43,16 @@ public class CommandStack {
         try {
             handler.handle(eventContext, event);
         } catch (IdentityException e) {
-            this.rollback();
+            throw this.rollback(e, handler, event);
         }
     }
 
-    public void rollback() throws IdentityException {
+    private IdentityException rollback(IdentityException original, IdentityEventHandler identityEventHandler, Event
+            event) {
 
-        IdentityException identityException = null;
-        StringBuilder builder = new StringBuilder("Error(s) occurred while executing rollback operation(s) of ");
+        List<IdentityException> exceptionList = new ArrayList<>();
+        StringBuilder builder = new StringBuilder("Error occurred in handler: " + identityEventHandler.getName() +
+                                                  "for event: " + event.getEventName()).append("\n");
 
         while (!commandsStack.isEmpty()) {
             Command command = commandsStack.pop();
@@ -56,22 +60,21 @@ public class CommandStack {
                 command.rollback();
             } catch (IdentityException e) {
                 //Suppress all the exceptions of rollback failures to a single exception.
-                if (identityException == null) {
-                    identityException = new IdentityException(e);
-                } else {
-                    identityException.addSuppressed(e);
-                }
-
-                String failure = String.format("handler: %s for event: %s", command.getIdentityEventHandler().getName(),
+                exceptionList.add(e);
+                String failure = String.format("Error during rollback operation of handler: %s for event: %s",
+                                               command.getIdentityEventHandler().getName(),
                                                command.getEvent().getEventName());
                 log.error("Error during rollback operation of " + failure, e);
                 builder.append(failure).append("\n");
             }
         }
 
-        if (identityException != null) {
-            throw new IdentityException(builder.toString(), identityException);
-        }
+        IdentityException ex = new IdentityException(builder.toString(), original);
 
+        //Java 8 forEach is not used to avoid a findbugs false positive: UC_USELESS_OBJECT.
+        for (IdentityException exp: exceptionList) {
+            ex.addSuppressed(exp);
+        }
+        return ex;
     }
 }
