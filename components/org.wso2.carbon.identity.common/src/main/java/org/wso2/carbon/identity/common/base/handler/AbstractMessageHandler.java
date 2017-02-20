@@ -76,12 +76,18 @@ public abstract class AbstractMessageHandler implements MessageHandler {
 
     public int getPriority(MessageContext messageContext) {
 
-        HandlerConfig identityEventListenerConfig = IdentityUtils.getInstance().getHandlerConfig()
-                .get(new HandlerConfigKey(AbstractMessageHandler.class.getName(), this.getClass().getName()));
-        if (identityEventListenerConfig == null) {
-            return Constants.EVENT_LISTENER_ORDER_DEFAULT;
-        }
-        return identityEventListenerConfig.getOrder();
+        /*
+         HandlerConfig identityEventListenerConfig = IdentityUtils.getInstance().getHandlerConfig()
+         .get(new HandlerConfigKey(AbstractMessageHandler.class.getName(), this.getClass().getName()));
+         if (identityEventListenerConfig == null) {
+         return Constants.EVENT_LISTENER_ORDER_DEFAULT;
+         }
+         return identityEventListenerConfig.getOrder();
+         */
+        // TODO: Use carbon 5.2.0 config model to read the priority from file. Related JIRA:
+        // https://wso2.org/jira/browse/IDENTITY-5769
+
+        return Constants.EVENT_LISTENER_ORDER_DEFAULT;
     }
 
     public String getName() {
