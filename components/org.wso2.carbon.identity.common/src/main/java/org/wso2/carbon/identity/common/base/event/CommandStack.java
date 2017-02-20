@@ -41,14 +41,15 @@ public class CommandStack {
         try {
             handler.handle(eventContext, event);
         } catch (IdentityException e) {
-            this.rollback();
+            this.rollback(e, handler);
         }
     }
 
-    public void rollback() throws IdentityException {
+    private void rollback(IdentityException identityException, IdentityEventHandler identityEventHandler) throws
+            IdentityException {
 
-        IdentityException identityException = null;
-        StringBuilder builder = new StringBuilder("Error(s) occurred while executing rollback operation(s) of ");
+        StringBuilder builder = new StringBuilder("Error occurred in handler :" + identityEventHandler.getName())
+                .append("\n");
 
         while (!commandsStack.isEmpty()) {
             Command command = commandsStack.pop();
@@ -62,8 +63,9 @@ public class CommandStack {
                     identityException.addSuppressed(e);
                 }
 
-                String failure = String.format("handler: %s for event: %s", command.getIdentityEventHandler().getName(),
-                                               command.getEvent().getEventName());
+                String failure = String.format("Error during rollback operation of handler: %s for event: %s",
+                        command.getIdentityEventHandler().getName(),
+                        command.getEvent().getEventName());
                 log.error("Error during rollback operation of " + failure, e);
                 builder.append(failure).append("\n");
             }
