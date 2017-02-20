@@ -18,6 +18,14 @@
 
 package org.wso2.carbon.identity.common.jdbc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -31,6 +39,8 @@ import java.util.Map;
  * Prepared statement with named indexes.
  */
 public class NamedPreparedStatement {
+
+    private static final Logger logger = LoggerFactory.getLogger(NamedPreparedStatement.class);
 
     private PreparedStatement preparedStatement;
     private List<String> fields = new ArrayList<>();
@@ -148,6 +158,44 @@ public class NamedPreparedStatement {
         for (String value : values) {
             preparedStatement.setString(getIndex(name) + indexInc, value);
             indexInc++;
+        }
+    }
+
+    /**
+     * Replace <code>Blob</code> value for named index.
+     *
+     * @param name   Name of the index.
+     * @param value Value to be replaced.
+     * @throws SQLException SQL Exception.
+     */
+    public void setBlob(String name, Object value) throws SQLException {
+
+        if (value != null) {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = null;
+            try {
+                oos = new ObjectOutputStream(baos);
+                oos.writeObject(value);
+                oos.flush();
+            } catch (IOException e) {
+                logger.error("Error while reading stream.", e);
+            } finally {
+                if (oos != null) {
+                    try {
+                        oos.close();
+                    } catch (IOException e) {
+                        logger.error("Error while closing stream.", e);
+                    }
+                }
+            }
+            InputStream inputStream = new ByteArrayInputStream(baos.toByteArray());
+            try {
+                preparedStatement.setBinaryStream(getIndex(name), inputStream, inputStream.available());
+            } catch (IOException e) {
+                logger.error("Error while setting input stream to prepared statement.", e);
+            }
+        } else {
+            preparedStatement.setBinaryStream(getIndex(name), null, 0);
         }
     }
 
