@@ -43,7 +43,6 @@
     <modules>
         <module>components/org.wso2.carbon.identity.common</module>
         <module>components/org.wso2.carbon.identity.event</module>
-        <!--<module>components/org.wso2.carbon.identity.keystore</module>-->
         <module>feature/org.wso2.carbon.identity.common.feature</module>
     </modules>
 
