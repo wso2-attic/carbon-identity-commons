@@ -40,6 +40,7 @@ import java.security.SignatureException;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -252,6 +253,20 @@ public class IdentityUtils {
 
     public Map<CookieConfigKey, CookieConfig> getCookieConfig() {
         return IdentityCommonDataHolder.getInstance().getCookieConfig();
+    }
+
+    /**
+     *
+     * @return auto-generated OTP value
+     */
+    public String generateOTPValue() {
+        char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
+        Random rnd = new Random();
+        StringBuilder sb = new StringBuilder("");
+        for (int i = 0; i < 6; i++) {
+            sb.append(chars[rnd.nextInt(chars.length)]);
+        }
+        return sb.toString();
     }
 
     // User store case sensitivity check method must come from RealmService
