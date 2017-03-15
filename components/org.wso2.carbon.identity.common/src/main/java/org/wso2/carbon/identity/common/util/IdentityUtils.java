@@ -256,10 +256,9 @@ public class IdentityUtils {
     }
 
     /**
-     *
      * @return auto-generated OTP value
      */
-    public String generateOTPValue() {
+    public static String generateOTPValue() {
         char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
         Random rnd = new Random();
         StringBuilder sb = new StringBuilder("");
