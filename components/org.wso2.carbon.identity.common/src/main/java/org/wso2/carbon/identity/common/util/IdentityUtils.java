@@ -256,6 +256,8 @@ public class IdentityUtils {
     }
 
     /**
+     * generates the one time password
+     *
      * @return auto-generated OTP value
      */
     public static String generateOTPValue() {
