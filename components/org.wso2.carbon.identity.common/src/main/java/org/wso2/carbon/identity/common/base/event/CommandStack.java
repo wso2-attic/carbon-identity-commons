@@ -69,7 +69,7 @@ public class CommandStack {
             }
         }
 
-        IdentityException ex = new IdentityException(builder.toString(), original);
+        IdentityException ex = new IdentityException(original.getErrorCode(), builder.toString(), original);
 
         //Java 8 forEach is not used to avoid a findbugs false positive: UC_USELESS_OBJECT.
         for (IdentityException exp: exceptionList) {
