@@ -22,7 +22,7 @@ package org.wso2.carbon.identity.common.base.exception;
 public class IdentityRuntimeException extends RuntimeException {
 
     private static final long serialVersionUID = -5872545821846152596L;
-    private String errorCode = null;
+    protected String errorCode = null;
 
     public IdentityRuntimeException(String message) {
         super(message);
@@ -41,6 +41,10 @@ public class IdentityRuntimeException extends RuntimeException {
     public IdentityRuntimeException(String errorCode, Throwable cause) {
         super(cause);
         this.errorCode = errorCode;
+    }
+
+    public String getErrorCode() {
+        return errorCode;
     }
 
 //    public static IdentityRuntimeException error(String message) {

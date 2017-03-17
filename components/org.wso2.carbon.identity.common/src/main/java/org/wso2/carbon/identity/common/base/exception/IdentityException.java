@@ -22,7 +22,7 @@ package org.wso2.carbon.identity.common.base.exception;
 public class IdentityException extends Exception {
 
     private static final long serialVersionUID = 725992116511551241L;
-    private String errorCode = null;
+    protected String errorCode = null;
 
     public IdentityException(String message) {
         super(message);
