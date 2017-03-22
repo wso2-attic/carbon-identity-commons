@@ -4,7 +4,7 @@
 
 |  Branch | Build Status |
 | :------------ |:-------------
-| master      | [![Build Status](https://wso2.org/jenkins/buildStatus/icon?job=carbon-identity-commons)](https://wso2.org/jenkins/job/carbon-identity-commons) |
+| master      | [![Build Status](https://wso2.org/jenkins/buildStatus/icon?job=platform-builds/carbon-identity-commons)](https://wso2.org/jenkins/job/platform-builds/job/carbon-identity-commons/) |
 
 
 ---
