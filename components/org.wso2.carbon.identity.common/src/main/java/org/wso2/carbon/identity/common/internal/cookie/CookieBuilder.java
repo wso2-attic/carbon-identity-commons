@@ -108,7 +108,7 @@ public class CookieBuilder {
     }
 
     /**
-     * Need to replace with C5 cookies
+     * Need to replace with C5 cookies.
      */
 
 //    public Cookie build() {

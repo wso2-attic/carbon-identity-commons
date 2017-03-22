@@ -101,7 +101,7 @@ public class URLUtils {
     }
 
     /**
-     * Get client IP address from the http request
+     * Get client IP address from the http request.
      *
      * @param request http servlet request
      * @return IP address of the initial client

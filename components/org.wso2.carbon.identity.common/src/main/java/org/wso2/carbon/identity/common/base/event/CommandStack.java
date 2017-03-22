@@ -64,7 +64,7 @@ public class CommandStack {
                 String failure = String.format("Error during rollback operation of handler: %s for event: %s",
                                                command.getIdentityEventHandler().getName(),
                                                command.getEvent().getEventName());
-                log.error("Error during rollback operation of " + failure, e);
+                log.error(failure, e);
                 builder.append(failure).append("\n");
             }
         }

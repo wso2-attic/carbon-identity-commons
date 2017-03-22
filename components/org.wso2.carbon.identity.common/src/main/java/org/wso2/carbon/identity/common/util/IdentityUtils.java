@@ -197,6 +197,7 @@ public class IdentityUtils {
     }
 
     /**
+     * Check for exclusive or.
      * @param array : Array of input
      * @return : ExclusiveOR
      */
