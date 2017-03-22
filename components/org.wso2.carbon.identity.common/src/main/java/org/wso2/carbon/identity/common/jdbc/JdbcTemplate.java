@@ -45,12 +45,15 @@ public class JdbcTemplate {
      *
      * @param query     the SQL query with the parameter placeholders.
      * @param rowMapper Row mapper functional interface
+     * @param <E>  type of the Exception which may be thrown by the "RowMapper", and which supposed to be handled by
+     *           the caller method.
      * @param <T> type of the result
      * @return List of domain objects of required type.
+     * @throws E on execute query
      * @throws DataAccessException on execute query
      */
-    public <T extends Object> List<T> executeQuery(final String query, RowMapper<T> rowMapper)
-            throws DataAccessException {
+    public <E extends Exception, T extends Object> List<T> executeQuery(final String query, RowMapper<T, E> rowMapper)
+            throws E, DataAccessException {
         return executeQuery(query, rowMapper, null);
     }
 
@@ -60,12 +63,16 @@ public class JdbcTemplate {
      * @param query       the SQL query with the parameter placeholders.
      * @param rowMapper   Row mapper functional interface
      * @param queryFilter parameters for the SQL query parameter replacement.
+     * @param <E>  type of the Exception which may be thrown by the "RowMapper", and which supposed to be handled by
+     *           the caller method.
      * @param <T> type of the result
      * @return List of domain objects of required type.
+     * @throws E on execute query
      * @throws DataAccessException on execute query
      */
-    public <T extends Object> List<T> executeQuery(String query, RowMapper<T> rowMapper, QueryFilter queryFilter)
-            throws DataAccessException {
+    public <E extends Exception, T extends Object> List<T> executeQuery(String query,
+        RowMapper<T, E> rowMapper, QueryFilter queryFilter) throws E, DataAccessException {
+
         List<T> result = new ArrayList();
         try (Connection connection = dataSource.getConnection()) {
             NamedPreparedStatement namedPreparedStatement = new NamedPreparedStatement(connection, query);
@@ -85,8 +92,8 @@ public class JdbcTemplate {
             }
         } catch (SQLException e) {
             logDebugInfo(
-                    "There has been an error performing the database query. The query is {}, and the Parameters are {}",
-                    e, query, queryFilter);
+                    "There has been an error performing the database query. The query is {}, and the Parameters " +
+                            "are {}", e, query, queryFilter);
             throw new DataAccessException("Error in performing Database query: " + query, e);
         }
         return result;
@@ -98,12 +105,16 @@ public class JdbcTemplate {
      * @param query       the SQL query with the parameter placeholders.
      * @param rowMapper   Row mapper functional interface
      * @param queryFilter parameters for the SQL query parameter replacement.
+     * @param <E>  type of the Exception which may be thrown by the "RowMapper", and which supposed to be handled by
+     *           the caller method.
      * @param <T>         type of the result
      * @return domain object of required type.
+     * @throws E on execute query
      * @throws DataAccessException on execute query
      */
-    public <T extends Object> T fetchSingleRecord(String query, RowMapper<T> rowMapper, QueryFilter queryFilter)
-            throws DataAccessException {
+    public <E extends Exception, T extends Object> T fetchSingleRecord(String query, RowMapper<T, E> rowMapper,
+                                                                QueryFilter queryFilter) throws E, DataAccessException {
+
         T result = null;
         try (Connection connection = dataSource.getConnection()) {
             NamedPreparedStatement namedPreparedStatement = new NamedPreparedStatement(connection, query);
