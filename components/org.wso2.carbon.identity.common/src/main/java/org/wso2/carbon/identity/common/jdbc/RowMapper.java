@@ -31,9 +31,10 @@ import java.sql.SQLException;
  * }
  *
  * @param <T> the type of the domain object.
+ * @param <E> the type of the Exception
  */
 @FunctionalInterface
-public interface RowMapper<T extends Object> {
+public interface RowMapper<T extends Object, E extends Exception> {
 
-    T mapRow(ResultSet resultSet, int rowNumber) throws SQLException;
+    T mapRow(ResultSet resultSet, int rowNumber) throws SQLException, E;
 }
