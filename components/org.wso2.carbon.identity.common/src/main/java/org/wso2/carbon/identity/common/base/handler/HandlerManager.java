@@ -83,6 +83,8 @@ public class HandlerManager {
     }
 
     /**
+     * Sort and filter the enabled handlers.
+     *
      * @param identityHandlers : identity handlers
      * @param isEnableHandlersOnly : is Enabled handlers only
      * @param <T> : T
