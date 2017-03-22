@@ -45,7 +45,8 @@ public class JdbcTemplate {
      *
      * @param query     the SQL query with the parameter placeholders.
      * @param rowMapper Row mapper functional interface
-     * @param <E> type of the Exception
+     * @param <E>  type of the Exception which may be thrown by the "RowMapper", and which supposed to be handled by
+     *           the caller method.
      * @param <T> type of the result
      * @return List of domain objects of required type.
      * @throws E on execute query
@@ -56,28 +57,14 @@ public class JdbcTemplate {
         return executeQuery(query, rowMapper, null);
     }
 
-
-    /**
-     *
-     * @param query
-     * @param rowMapper
-     * @param <E>
-     * @param <T>
-     * @return
-     * @throws E
-     * @throws DataAccessException
-     */
-    public <E extends Exception, T extends Object> List<T> executeQuery1(final String query, RowMapper<T, E> rowMapper)
-            throws E, DataAccessException {
-        return executeQuery(query, rowMapper, null);
-    }
     /**
      * Executes a query on JDBC and return the result as a list of domain objects.
      *
      * @param query       the SQL query with the parameter placeholders.
      * @param rowMapper   Row mapper functional interface
      * @param queryFilter parameters for the SQL query parameter replacement.
-     * @param <E> type of the Exception
+     * @param <E>  type of the Exception which may be thrown by the "RowMapper", and which supposed to be handled by
+     *           the caller method.
      * @param <T> type of the result
      * @return List of domain objects of required type.
      * @throws E on execute query
@@ -118,7 +105,8 @@ public class JdbcTemplate {
      * @param query       the SQL query with the parameter placeholders.
      * @param rowMapper   Row mapper functional interface
      * @param queryFilter parameters for the SQL query parameter replacement.
-     * @param <E> type of the Exception
+     * @param <E>  type of the Exception which may be thrown by the "RowMapper", and which supposed to be handled by
+     *           the caller method.
      * @param <T>         type of the result
      * @return domain object of required type.
      * @throws E on execute query
