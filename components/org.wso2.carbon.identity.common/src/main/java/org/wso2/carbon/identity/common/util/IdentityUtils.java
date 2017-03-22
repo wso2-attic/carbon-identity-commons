@@ -254,6 +254,22 @@ public class IdentityUtils {
         return IdentityCommonDataHolder.getInstance().getCookieConfig();
     }
 
+    /**
+     * generates the one time password
+     *
+     * @param maxLength maximum length of a code
+     * @return auto-generated pass code value
+     */
+    public static String generatePasscode(int maxLength) {
+        char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
+        SecureRandom rnd = new SecureRandom();
+        StringBuilder sb = new StringBuilder("");
+        for (int i = 0; i < maxLength; i++) {
+            sb.append(chars[rnd.nextInt(chars.length)]);
+        }
+        return sb.toString();
+    }
+
     // User store case sensitivity check method must come from RealmService
 
     // Session cleanup period, session cleanup timeout, operation cleanup period and operation cleanup timeout must
