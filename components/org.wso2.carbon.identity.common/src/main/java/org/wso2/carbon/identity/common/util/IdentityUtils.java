@@ -88,32 +88,6 @@ public class IdentityUtils {
     }
 
     /**
-     * Generates a secure random hexadecimal string using SHA1 PRNG and digest.
-     * @return Random hexadecimal encoded String
-     * @throws Exception : Exeption
-     */
-    public static String generateUUID() throws Exception {
-
-        String uuid = null;
-//        try {
-//            // SHA1 Pseudo Random Number Generator
-//            SecureRandom prng = SecureRandom.getInstance("SHA1PRNG");
-//
-//            // random number
-//            String randomNum = Integer.toString(prng.nextInt());
-//            MessageDigest sha = MessageDigest.getInstance("SHA-256");
-//            byte[] digest = sha.digest(randomNum.getBytes());
-//
-//            // Hexadecimal encoding
-//            return new String(Hex.encodeHex(digest));
-//
-//        } catch (NoSuchAlgorithmException e) {
-//            throw new Exception("Failed to generate UUID ", e);
-//        }
-        return uuid;
-    }
-
-    /**
      * Generates a random number using two UUIDs and HMAC-SHA1.
      * @return : random
      * @throws IdentityRuntimeException : IdentityRuntimeException
@@ -269,6 +243,16 @@ public class IdentityUtils {
         }
         return sb.toString();
     }
+
+    /**
+     * generates random string
+     *
+     * @return a random string
+     */
+    public static String generateUUID() {
+        return UUID.randomUUID().toString();
+    }
+
 
     // User store case sensitivity check method must come from RealmService
 
