@@ -36,12 +36,14 @@
         <dependency>
             <groupId>org.wso2.carbon.identity.commons</groupId>
             <artifactId>org.wso2.carbon.identity.commons</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon.identity.commons</groupId>
             <artifactId>org.wso2.carbon.identity.event</artifactId>
-            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
     </dependencies>
 
@@ -99,11 +101,15 @@
                             <bundles>
                                 <bundle>
                                     <symbolicName>org.wso2.carbon.identity.commons</symbolicName>
-                                    <version>${project.version}</version>
+                                    <version>${carbon.identity.commons.version}</version>
                                 </bundle>
                                 <bundle>
                                     <symbolicName>org.wso2.carbon.identity.event</symbolicName>
-                                    <version>${project.version}</version>
+                                    <version>${carbon.identity.commons.version}</version>
+                                </bundle>
+                                <bundle>
+                                    <symbolicName>org.apache.commons.lang3</symbolicName>
+                                    <version>${commons-lang3.version}</version>
                                 </bundle>
                             </bundles>
                         </configuration>
