@@ -47,7 +47,7 @@ import javax.crypto.spec.SecretKeySpec;
 /**
  * Identity utils.
  */
-public class IdentityUtils implements IdentityUtilsService {
+public class IdentityUtils implements UtilService {
 
     public static final ThreadLocal<Map<String, Object>> MAP_THREAD_LOCAL = new ThreadLocal<Map<String, Object>>() {
 

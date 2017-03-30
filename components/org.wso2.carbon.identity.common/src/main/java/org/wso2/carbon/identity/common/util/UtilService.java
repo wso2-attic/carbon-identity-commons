@@ -19,7 +19,7 @@ package org.wso2.carbon.identity.common.util;
 /**
  * Identity utils service.
  */
-public interface IdentityUtilsService {
+public interface UtilService {
 
     String generatePasscode(int maxLength);
 
