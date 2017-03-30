@@ -47,7 +47,7 @@ import javax.crypto.spec.SecretKeySpec;
 /**
  * Identity utils.
  */
-public class IdentityUtils {
+public class IdentityUtils implements IdentityUtilsService {
 
     public static final ThreadLocal<Map<String, Object>> MAP_THREAD_LOCAL = new ThreadLocal<Map<String, Object>>() {
 
@@ -260,7 +260,8 @@ public class IdentityUtils {
      * @param maxLength maximum length of a code
      * @return auto-generated pass code value
      */
-    public static String generatePasscode(int maxLength) {
+    @Override
+    public String generatePasscode(int maxLength) {
         char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
         SecureRandom rnd = new SecureRandom();
         StringBuilder sb = new StringBuilder("");
@@ -269,6 +270,7 @@ public class IdentityUtils {
         }
         return sb.toString();
     }
+
 
     // User store case sensitivity check method must come from RealmService
 
