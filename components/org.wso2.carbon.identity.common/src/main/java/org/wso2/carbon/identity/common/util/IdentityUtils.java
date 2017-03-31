@@ -92,25 +92,13 @@ public class IdentityUtils {
      * @return Random hexadecimal encoded String
      * @throws Exception : Exeption
      */
+    /**
+     * generates random string
+     *
+     * @return arandon string
+     */
     public static String generateUUID() throws Exception {
-
-        String uuid = null;
-//        try {
-//            // SHA1 Pseudo Random Number Generator
-//            SecureRandom prng = SecureRandom.getInstance("SHA1PRNG");
-//
-//            // random number
-//            String randomNum = Integer.toString(prng.nextInt());
-//            MessageDigest sha = MessageDigest.getInstance("SHA-256");
-//            byte[] digest = sha.digest(randomNum.getBytes());
-//
-//            // Hexadecimal encoding
-//            return new String(Hex.encodeHex(digest));
-//
-//        } catch (NoSuchAlgorithmException e) {
-//            throw new Exception("Failed to generate UUID ", e);
-//        }
-        return uuid;
+        return UUID.randomUUID().toString();
     }
 
     /**
