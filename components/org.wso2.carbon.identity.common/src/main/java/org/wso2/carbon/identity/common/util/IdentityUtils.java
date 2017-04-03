@@ -93,9 +93,9 @@ public class IdentityUtils {
      * @throws Exception : Exeption
      */
     /**
-     * generates random string
+     * Generates a UUID(Universal Unique ID).
      *
-     * @return arandon string
+     * @return a UUID as a string.
      */
     public static String generateUUID() throws Exception {
         return UUID.randomUUID().toString();
