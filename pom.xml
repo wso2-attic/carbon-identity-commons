@@ -73,6 +73,11 @@
                 <artifactId>commons-collections</artifactId>
                 <version>${commons-collections.version}</version>
             </dependency>
+            <!--<dependency>-->
+                <!--<groupId>commons-lang</groupId>-->
+                <!--<artifactId>commons-lang</artifactId>-->
+                <!--<version>${commons-lang.version}</version>-->
+            <!--</dependency>-->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
@@ -97,6 +102,11 @@
                 <groupId>org.yaml</groupId>
                 <artifactId>snakeyaml</artifactId>
                 <version>${org.snakeyaml.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -133,6 +143,7 @@
         <xerces.package.import.version>[2.11,3)</xerces.package.import.version>
         <commons-lang3.version>3.4</commons-lang3.version>
         <commons-lang3.import.version.range>(3.4, 3.5]</commons-lang3.import.version.range>
+        <commons-lang.version>2.6</commons-lang.version>
         <commons-collections.version>3.1</commons-collections.version>
         <commons-collections.import.version.range>[3,4)</commons-collections.import.version.range>
         <commons-io.version>2.5</commons-io.version>
