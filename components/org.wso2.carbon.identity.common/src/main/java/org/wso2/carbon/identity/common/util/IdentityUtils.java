@@ -47,7 +47,7 @@ import javax.crypto.spec.SecretKeySpec;
 /**
  * Identity utils.
  */
-public class IdentityUtils implements UtilService {
+public class IdentityUtils {
 
     public static final ThreadLocal<Map<String, Object>> MAP_THREAD_LOCAL = new ThreadLocal<Map<String, Object>>() {
 
@@ -252,23 +252,6 @@ public class IdentityUtils implements UtilService {
 
     public Map<CookieConfigKey, CookieConfig> getCookieConfig() {
         return IdentityCommonDataHolder.getInstance().getCookieConfig();
-    }
-
-    /**
-     * generates the one time password
-     *
-     * @param maxLength maximum length of a code
-     * @return auto-generated pass code value
-     */
-    @Override
-    public String generatePasscode(int maxLength) {
-        char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
-        SecureRandom rnd = new SecureRandom();
-        StringBuilder sb = new StringBuilder("");
-        for (int i = 0; i < maxLength; i++) {
-            sb.append(chars[rnd.nextInt(chars.length)]);
-        }
-        return sb.toString();
     }
 
 
