@@ -86,10 +86,15 @@
             <dependency>
                 <groupId>org.wso2.carbon.identity.commons</groupId>
                 <artifactId>org.wso2.carbon.identity.commons</artifactId>
-                <version>${project.version}</version>
+                <version>${carbon.identity.commons.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.orbit.org.yaml</groupId>
+                <groupId>org.wso2.carbon.identity.commons</groupId>
+                <artifactId>org.wso2.carbon.identity.event</artifactId>
+                <version>${carbon.identity.commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.yaml</groupId>
                 <artifactId>snakeyaml</artifactId>
                 <version>${org.snakeyaml.version}</version>
             </dependency>
@@ -118,9 +123,9 @@
     </build>
 
     <properties>
-        <carbon.kernel.version>5.1.0</carbon.kernel.version>
+        <carbon.kernel.version>5.2.0-m3</carbon.kernel.version>
         <carbon.kernel.package.import.version>[5,6)</carbon.kernel.package.import.version>
-        <carbon.feature.plugin.version>2.0.1</carbon.feature.plugin.version>
+        <carbon.feature.plugin.version>3.0.0</carbon.feature.plugin.version>
 
         <slf4j.version>1.7.1</slf4j.version>
         <slf4j.package.import.version>[1.7.1,2)</slf4j.package.import.version>
@@ -132,12 +137,13 @@
         <commons-collections.import.version.range>[3,4)</commons-collections.import.version.range>
         <commons-io.version>2.5</commons-io.version>
         <commons-io.package.import.version.range>[2.5,3)</commons-io.package.import.version.range>
-        <org.snakeyaml.version>1.16.0.wso2v1</org.snakeyaml.version>
+        <org.snakeyaml.version>1.17</org.snakeyaml.version>
 
         <carbon.logging.package.import.version>[5,6)</carbon.logging.package.import.version>
-        <carbon.caching.version>1.0.0</carbon.caching.version>
+        <carbon.caching.version>1.1.3</carbon.caching.version>
         <carbon.caching.package.import.version>[1,2)</carbon.caching.package.import.version>
 
+        <carbon.identity.commons.version>${project.version}</carbon.identity.commons.version>
         <identity.event.package.export.version>${project.version}</identity.event.package.export.version>
         <identity.common.package.export.version>${project.version}</identity.common.package.export.version>
         <identity.keystore.package.export.version>${project.version}</identity.keystore.package.export.version>
