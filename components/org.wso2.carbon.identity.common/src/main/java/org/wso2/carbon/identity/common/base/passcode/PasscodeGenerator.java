@@ -16,12 +16,12 @@
 package org.wso2.carbon.identity.common.base.passcode;
 
 /**
- * Passcode generator contract
+ * Passcode generator contract.
  */
 public interface PasscodeGenerator {
 
     /**
-     *
+     * Generate passcode for given length.
      * @param maxLength specify the length of generated passcode
      * @return generated passcode
      */
