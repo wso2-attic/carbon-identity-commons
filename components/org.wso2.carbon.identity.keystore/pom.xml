@@ -57,7 +57,7 @@
         <import.package>
             org.slf4j.*; version="${slf4j.package.import.version}",
         </import.package>
-        <dynamic.import.package>*</dynamic.import.package>
+
     </properties>
 
 </project>
