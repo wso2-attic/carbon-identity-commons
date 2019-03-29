@@ -123,7 +123,7 @@
     </build>
 
     <properties>
-        <carbon.kernel.version>5.2.0-m3</carbon.kernel.version>
+        <carbon.kernel.version>5.2.8</carbon.kernel.version>
         <carbon.kernel.package.import.version>[5,6)</carbon.kernel.package.import.version>
         <carbon.feature.plugin.version>3.0.0</carbon.feature.plugin.version>
 
