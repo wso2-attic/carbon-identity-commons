@@ -131,8 +131,8 @@
         <slf4j.package.import.version>[1.7.1,2)</slf4j.package.import.version>
         <xerces.version>2.12.0</xerces.version>
         <xerces.package.import.version>[2.11,3)</xerces.package.import.version>
-        <commons-lang3.version>3.8.1</commons-lang3.version>
-        <commons-lang3.import.version.range>(3.4, 3.5]</commons-lang3.import.version.range>
+        <commons-lang3.version>3.9</commons-lang3.version>
+        <commons-lang3.import.version.range>(3.4, 3.10]</commons-lang3.import.version.range>
         <commons-collections.version>3.1</commons-collections.version>
         <commons-collections.import.version.range>[3,4)</commons-collections.import.version.range>
         <commons-io.version>2.5</commons-io.version>
