@@ -1,64 +1,93 @@
+/*
+ *  Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
 package org.wso2.carbon.identity.tenant.resource.manager;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.wso2.carbon.context.PrivilegedCarbonContext;
 import org.wso2.carbon.event.output.adapter.core.OutputEventAdapterConfiguration;
 import org.wso2.carbon.event.output.adapter.core.exception.ConnectionUnavailableException;
 import org.wso2.carbon.event.output.adapter.email.EmailEventAdapter;
+import org.wso2.carbon.identity.configuration.mgt.core.ConfigurationManager;
+import org.wso2.carbon.identity.configuration.mgt.core.exception.ConfigurationManagementException;
+import org.wso2.carbon.identity.configuration.mgt.core.model.Attribute;
+import org.wso2.carbon.identity.configuration.mgt.core.model.Resource;
+import org.wso2.carbon.identity.tenant.resource.manager.internal.EmailEventAdapterFactoryDataHolder;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ThreadPoolExecutor;
-import javax.mail.Session;
-import javax.mail.internet.InternetAddress;
 
 public class TenantAwareEmailEventAdapter extends EmailEventAdapter {
     private static final Log log = LogFactory.getLog(TenantAwareEmailEventAdapter.class);
-    private static ThreadPoolExecutor threadPoolExecutor;
-    private  Session session;
-    private OutputEventAdapterConfiguration eventAdapterConfiguration;
     private Map<String, String> globalProperties;
-    private int tenantId;
+    private final String RESOURCE_TYPE = "mail";
+    private final String RESOURCE = "smtp";
+
     /**
      * Default from address for outgoing messages.
      */
-    private InternetAddress smtpFromAddress = null;
     public TenantAwareEmailEventAdapter(OutputEventAdapterConfiguration eventAdapterConfiguration,
             Map<String, String> globalProperties) {
         super(eventAdapterConfiguration, globalProperties);
         this.globalProperties = globalProperties;
-        this.eventAdapterConfiguration = eventAdapterConfiguration;
     }
 
     public void connect() throws ConnectionUnavailableException {
-        tenantId = PrivilegedCarbonContext.getThreadLocalCarbonContext().getTenantId();
 
-        log.info("Connecting using the TenantAwareEmailEventAdapter for tenant ID: "+ tenantId);
+        replaceGlobalPropertiesWithTenantProperties();
 
-        if (session == null) {
+        super.connect();
 
-            Map<String, String> propertiesMap = new HashMap<String, String>();
-            propertiesMap.put("mail.smtp.user", "resourcesiam5");
-            propertiesMap.put("mail.smtp.password", "xxxxx");
-
-            if (tenantId != -1234) {
-                replaceGlobalPropertiesWithTenantProperties(globalProperties, propertiesMap);
-            }
-            super.connect();
-
-        }
     }
 
-    private void replaceGlobalPropertiesWithTenantProperties(Map<String, String> globalProps,
-            Map<String, String> tenantProps ){
 
-        for(String key : tenantProps.keySet()){
-            if(globalProps.containsKey(key)){
-                globalProps.put(key,tenantProps.get(key));
+    /**
+     * Replace configs from output-event-adapters.xml by tenant wise configurations.
+     *
+     */
+    private void replaceGlobalPropertiesWithTenantProperties() {
+
+        List<Attribute> attributeList = getTenantSpecificAttributeList();
+        for (Attribute attribute : attributeList) {
+            String key = RESOURCE + "." + RESOURCE_TYPE + "." + attribute.getKey();
+            if (globalProperties.containsKey(key)) {
+                globalProperties.put(key, attribute.getValue());
             }
-
         }
 
     }
+
+    /**
+     * Get tenant specific configurations from config store.
+     *
+     */
+    private List<Attribute> getTenantSpecificAttributeList() {
+
+        EmailEventAdapterFactoryDataHolder emailEventAdapterFactoryDataHolder = EmailEventAdapterFactoryDataHolder
+                .getInstance();
+        ConfigurationManager configurationManager = emailEventAdapterFactoryDataHolder.getConfigurationManager();
+        List<Attribute> attributeList = new ArrayList<>();
+        try {
+            Resource resource = configurationManager.getResource(RESOURCE_TYPE, RESOURCE);
+            resource.getAttributes();
+        } catch (ConfigurationManagementException e) {
+            log.error("Error retrieving tenant wise SMTP configurations: ", e);
+        }
+        return attributeList;
+    }
+
 }
