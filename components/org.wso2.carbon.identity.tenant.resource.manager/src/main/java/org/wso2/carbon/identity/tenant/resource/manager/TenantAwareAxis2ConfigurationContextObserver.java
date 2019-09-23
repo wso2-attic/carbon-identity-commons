@@ -22,12 +22,15 @@ import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.context.PrivilegedCarbonContext;
 import org.wso2.carbon.event.publisher.core.config.EventPublisherConfiguration;
 import org.wso2.carbon.event.stream.core.EventStreamConfiguration;
-import org.wso2.carbon.identity.tenant.resource.manager.internal.EmailEventAdapterFactoryDataHolder;
+import org.wso2.carbon.identity.tenant.resource.manager.internal.TenantResourceManagerDataHolder;
 import org.wso2.carbon.utils.AbstractAxis2ConfigurationContextObserver;
 import org.wso2.carbon.utils.multitenancy.MultitenantConstants;
 
 import java.util.List;
 
+/**
+ * Axis2Observer for generating tenant wise publisher configurations.
+ */
 public class TenantAwareAxis2ConfigurationContextObserver extends AbstractAxis2ConfigurationContextObserver {
 
     private static final Log log = LogFactory.getLog(TenantAwareAxis2ConfigurationContextObserver.class);
@@ -44,10 +47,10 @@ public class TenantAwareAxis2ConfigurationContextObserver extends AbstractAxis2C
             carbonContext.setTenantId(MultitenantConstants.SUPER_TENANT_ID);
             carbonContext.setTenantDomain(MultitenantConstants.SUPER_TENANT_DOMAIN_NAME);
 
-            activeEventPublisherConfigurations = EmailEventAdapterFactoryDataHolder.getInstance()
+            activeEventPublisherConfigurations = TenantResourceManagerDataHolder.getInstance()
                     .getEventPublisherService().getAllActiveEventPublisherConfigurations();
 
-            eventStreamConfigurationList = EmailEventAdapterFactoryDataHolder.getInstance()
+            eventStreamConfigurationList = TenantResourceManagerDataHolder.getInstance()
                     .getCarbonEventStreamService().getAllEventStreamConfigurations();
 
         } catch (Exception e) {
@@ -63,20 +66,20 @@ public class TenantAwareAxis2ConfigurationContextObserver extends AbstractAxis2C
             PrivilegedCarbonContext.getThreadLocalCarbonContext().setTenantDomain(tenantDomain);
 
             for (EventStreamConfiguration eventStreamConfiguration : eventStreamConfigurationList) {
-                if (EmailEventAdapterFactoryDataHolder.getInstance().getCarbonEventStreamService()
+                if (TenantResourceManagerDataHolder.getInstance().getCarbonEventStreamService()
                         .getEventStreamConfiguration(eventStreamConfiguration.getStreamDefinition().getStreamId())
                         == null) {
-                    EmailEventAdapterFactoryDataHolder.getInstance().getCarbonEventStreamService()
+                    TenantResourceManagerDataHolder.getInstance().getCarbonEventStreamService()
                             .addEventStreamConfig(eventStreamConfiguration);
 
                 }
             }
 
             for (EventPublisherConfiguration eventPublisherConfiguration : activeEventPublisherConfigurations) {
-                if (EmailEventAdapterFactoryDataHolder.getInstance().getCarbonEventPublisherService()
+                if (TenantResourceManagerDataHolder.getInstance().getCarbonEventPublisherService()
                         .getActiveEventPublisherConfiguration(eventPublisherConfiguration.getEventPublisherName())
                         == null) {
-                    EmailEventAdapterFactoryDataHolder.getInstance().getCarbonEventPublisherService()
+                    TenantResourceManagerDataHolder.getInstance().getCarbonEventPublisherService()
                             .addEventPublisherConfiguration(eventPublisherConfiguration);
                 }
 
@@ -91,13 +94,14 @@ public class TenantAwareAxis2ConfigurationContextObserver extends AbstractAxis2C
         }
     }
 
-    public void createdConfigurationContext(ConfigurationContext configContext) {
-        log.info("created configuration context is called");
-    }
-
     public void terminatingConfigurationContext(ConfigurationContext configCtx) {
 
-        EmailEventAdapterFactoryDataHolder.getInstance().getCarbonOutputEventAdapterService().destroy("email");
+        List<String> eventAdapterTypes = TenantResourceManagerDataHolder.getInstance()
+                .getCarbonOutputEventAdapterService().getOutputEventAdapterTypes();
+
+        for (String eventAdapter : eventAdapterTypes) {
+            TenantResourceManagerDataHolder.getInstance().getCarbonOutputEventAdapterService().destroy(eventAdapter);
+        }
 
     }
 

@@ -21,17 +21,18 @@ import org.wso2.carbon.event.publisher.core.EventPublisherService;
 import org.wso2.carbon.event.stream.core.EventStreamService;
 import org.wso2.carbon.identity.configuration.mgt.core.ConfigurationManager;
 
-public class EmailEventAdapterFactoryDataHolder {
+/**
+ * DataHolder for Tenant Resource Manager.
+ */
+public class TenantResourceManagerDataHolder {
 
-    private static volatile EmailEventAdapterFactoryDataHolder instance = new EmailEventAdapterFactoryDataHolder();
+    private static volatile TenantResourceManagerDataHolder instance = new TenantResourceManagerDataHolder();
     private ConfigurationManager configurationManager;
 
-    private  EmailEventAdapterFactoryDataHolder(){
-
-
+    private TenantResourceManagerDataHolder(){
     }
 
-    public static EmailEventAdapterFactoryDataHolder getInstance() {
+    public static TenantResourceManagerDataHolder getInstance() {
         return instance;
     }
 

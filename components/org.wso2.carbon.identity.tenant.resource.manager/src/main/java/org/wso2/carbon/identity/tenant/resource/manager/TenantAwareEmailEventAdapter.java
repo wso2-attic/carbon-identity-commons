@@ -16,8 +16,12 @@
 
 package org.wso2.carbon.identity.tenant.resource.manager;
 
+import org.apache.commons.io.Charsets;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.wso2.carbon.context.CarbonContext;
+import org.wso2.carbon.core.util.CryptoException;
+import org.wso2.carbon.core.util.CryptoUtil;
 import org.wso2.carbon.event.output.adapter.core.OutputEventAdapterConfiguration;
 import org.wso2.carbon.event.output.adapter.core.exception.ConnectionUnavailableException;
 import org.wso2.carbon.event.output.adapter.email.EmailEventAdapter;
@@ -25,12 +29,15 @@ import org.wso2.carbon.identity.configuration.mgt.core.ConfigurationManager;
 import org.wso2.carbon.identity.configuration.mgt.core.exception.ConfigurationManagementException;
 import org.wso2.carbon.identity.configuration.mgt.core.model.Attribute;
 import org.wso2.carbon.identity.configuration.mgt.core.model.Resource;
-import org.wso2.carbon.identity.tenant.resource.manager.internal.EmailEventAdapterFactoryDataHolder;
+import org.wso2.carbon.identity.tenant.resource.manager.internal.TenantResourceManagerDataHolder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * EmailEventAdapter that deploy per tenant.
+ */
 public class TenantAwareEmailEventAdapter extends EmailEventAdapter {
     private static final Log log = LogFactory.getLog(TenantAwareEmailEventAdapter.class);
     private Map<String, String> globalProperties;
@@ -49,7 +56,6 @@ public class TenantAwareEmailEventAdapter extends EmailEventAdapter {
     public void connect() throws ConnectionUnavailableException {
 
         replaceGlobalPropertiesWithTenantProperties();
-
         super.connect();
 
     }
@@ -63,7 +69,7 @@ public class TenantAwareEmailEventAdapter extends EmailEventAdapter {
 
         List<Attribute> attributeList = getTenantSpecificAttributeList();
         for (Attribute attribute : attributeList) {
-            String key = RESOURCE + "." + RESOURCE_TYPE + "." + attribute.getKey();
+            String key = RESOURCE_TYPE + "." + RESOURCE + "." + attribute.getKey();
             if (globalProperties.containsKey(key)) {
                 globalProperties.put(key, attribute.getValue());
             }
@@ -77,17 +83,22 @@ public class TenantAwareEmailEventAdapter extends EmailEventAdapter {
      */
     private List<Attribute> getTenantSpecificAttributeList() {
 
-        EmailEventAdapterFactoryDataHolder emailEventAdapterFactoryDataHolder = EmailEventAdapterFactoryDataHolder
+        TenantResourceManagerDataHolder tenantResourceManagerDataHolder = TenantResourceManagerDataHolder
                 .getInstance();
-        ConfigurationManager configurationManager = emailEventAdapterFactoryDataHolder.getConfigurationManager();
-        List<Attribute> attributeList = new ArrayList<>();
+        ConfigurationManager configurationManager = tenantResourceManagerDataHolder.getConfigurationManager();
         try {
             Resource resource = configurationManager.getResource(RESOURCE_TYPE, RESOURCE);
-            resource.getAttributes();
+            return resource.getAttributes();
         } catch (ConfigurationManagementException e) {
-            log.error("Error retrieving tenant wise SMTP configurations: ", e);
+            log.warn("Error retrieving tenant wise SMTP configurations: "+ e.getMessage() + " global properties will"
+                    + " be used for the tenant id: " + CarbonContext.getThreadLocalCarbonContext().getTenantId());
         }
-        return attributeList;
+        return new ArrayList<Attribute>(0);
+    }
+
+    private String decrypt(String cipherText) throws CryptoException {
+        return new String(CryptoUtil.getDefaultCryptoUtil().base64DecodeAndDecrypt(
+                cipherText), Charsets.UTF_8);
     }
 
 }

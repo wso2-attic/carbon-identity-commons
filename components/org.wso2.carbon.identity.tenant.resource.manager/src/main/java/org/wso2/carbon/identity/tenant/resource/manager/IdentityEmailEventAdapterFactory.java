@@ -25,8 +25,11 @@ import org.wso2.carbon.event.output.adapter.email.EmailEventAdapterFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-public class TenantEmailEventAdapterFactory extends EmailEventAdapterFactory {
+/**
+ * EmailEventAdapterFactory cannot generate tenant wise adapters hence new factory created.
+ * IdentityEmailEventAdapterFactory for identity server.
+ */
+public class IdentityEmailEventAdapterFactory extends EmailEventAdapterFactory {
 
     public String getType() {
         return "email-is";

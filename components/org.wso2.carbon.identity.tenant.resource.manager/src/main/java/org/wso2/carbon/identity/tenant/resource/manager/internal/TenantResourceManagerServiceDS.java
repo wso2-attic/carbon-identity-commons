@@ -24,8 +24,8 @@ import org.wso2.carbon.event.output.adapter.core.OutputEventAdapterService;
 import org.wso2.carbon.event.publisher.core.EventPublisherService;
 import org.wso2.carbon.event.stream.core.EventStreamService;
 import org.wso2.carbon.identity.configuration.mgt.core.ConfigurationManager;
+import org.wso2.carbon.identity.tenant.resource.manager.IdentityEmailEventAdapterFactory;
 import org.wso2.carbon.identity.tenant.resource.manager.TenantAwareAxis2ConfigurationContextObserver;
-import org.wso2.carbon.identity.tenant.resource.manager.TenantEmailEventAdapterFactory;
 import org.wso2.carbon.utils.AbstractAxis2ConfigurationContextObserver;
 import org.wso2.carbon.utils.Axis2ConfigurationContextObserver;
 
@@ -47,22 +47,21 @@ import org.wso2.carbon.utils.Axis2ConfigurationContextObserver;
  * interface="org.wso2.carbon.identity.configuration.mgt.core.ConfigurationManager" cardinality="1..1"
  * policy="dynamic" bind="setConfigurationManager" unbind="unsetConfigurationManager"
  */
+public class TenantResourceManagerServiceDS extends AbstractAxis2ConfigurationContextObserver {
 
-public class EmailEventAdapterFactoryServiceDS extends AbstractAxis2ConfigurationContextObserver {
-
-    private static final Log log = LogFactory.getLog(EmailEventAdapterFactoryServiceDS.class);
+    private static final Log log = LogFactory.getLog(TenantResourceManagerServiceDS.class);
 
     /**
-     * Register TenantEmailEventAdapterFactory as an OSGI service.
+     * Register IdentityEmailEventAdapterFactory as an OSGI service.
      *
      * @param context OSGI service component context.
      */
     protected void activate(ComponentContext context) {
 
         try {
-            TenantEmailEventAdapterFactory tenantEmailEventAdapterFactory = new TenantEmailEventAdapterFactory();
+            IdentityEmailEventAdapterFactory identityEmailEventAdapterFactory = new IdentityEmailEventAdapterFactory();
             context.getBundleContext().registerService(OutputEventAdapterFactory.class.getName(),
-                    tenantEmailEventAdapterFactory, null);
+                    identityEmailEventAdapterFactory, null);
 
             TenantAwareAxis2ConfigurationContextObserver tenantAwareAxis2ConfigurationContextObserver =
                     new TenantAwareAxis2ConfigurationContextObserver();
@@ -81,21 +80,21 @@ public class EmailEventAdapterFactoryServiceDS extends AbstractAxis2Configuratio
         if (log.isDebugEnabled()) {
             log.debug("Setting the Event Publisher Service");
         }
-        EmailEventAdapterFactoryDataHolder.getInstance().setEventPublisherService(eventPublisherService);
+        TenantResourceManagerDataHolder.getInstance().setEventPublisherService(eventPublisherService);
     }
 
     protected void unsetEventPublisherService(EventPublisherService eventPublisherService) {
         if (log.isDebugEnabled()) {
             log.debug("UnSetting the Event Publisher Service");
         }
-        EmailEventAdapterFactoryDataHolder.getInstance().setEventPublisherService(null);
+        TenantResourceManagerDataHolder.getInstance().setEventPublisherService(null);
     }
 
     protected void setCarbonOutputEventAdapterService(OutputEventAdapterService carbonOutputEventAdapterService){
         if (log.isDebugEnabled()) {
             log.debug("Setting the CarbonOutputEventAdapter Service");
         }
-        EmailEventAdapterFactoryDataHolder.getInstance().setCarbonOutputEventAdapterService(carbonOutputEventAdapterService);
+        TenantResourceManagerDataHolder.getInstance().setCarbonOutputEventAdapterService(carbonOutputEventAdapterService);
 
     }
 
@@ -103,7 +102,7 @@ public class EmailEventAdapterFactoryServiceDS extends AbstractAxis2Configuratio
         if (log.isDebugEnabled()) {
             log.debug("Un Setting the CarbonOutputEventAdapter Service");
         }
-        EmailEventAdapterFactoryDataHolder.getInstance().setCarbonOutputEventAdapterService(null);
+        TenantResourceManagerDataHolder.getInstance().setCarbonOutputEventAdapterService(null);
 
     }
 
@@ -112,7 +111,7 @@ public class EmailEventAdapterFactoryServiceDS extends AbstractAxis2Configuratio
         if (log.isDebugEnabled()) {
             log.debug("Setting the CarbonEventPublisherService");
         }
-        EmailEventAdapterFactoryDataHolder.getInstance().setCarbonEventPublisherService(carbonEventPublisherService);
+        TenantResourceManagerDataHolder.getInstance().setCarbonEventPublisherService(carbonEventPublisherService);
 
     }
 
@@ -120,7 +119,7 @@ public class EmailEventAdapterFactoryServiceDS extends AbstractAxis2Configuratio
         if (log.isDebugEnabled()) {
             log.debug("Un Setting the CarbonEventPublisherService Service");
         }
-        EmailEventAdapterFactoryDataHolder.getInstance().setCarbonEventPublisherService(null);
+        TenantResourceManagerDataHolder.getInstance().setCarbonEventPublisherService(null);
 
     }
 
@@ -128,7 +127,7 @@ public class EmailEventAdapterFactoryServiceDS extends AbstractAxis2Configuratio
         if (log.isDebugEnabled()) {
             log.debug("Setting the EventStreamService");
         }
-        EmailEventAdapterFactoryDataHolder.getInstance().setCarbonEventStreamService(carbonEventStreamService);
+        TenantResourceManagerDataHolder.getInstance().setCarbonEventStreamService(carbonEventStreamService);
 
     }
 
@@ -136,7 +135,7 @@ public class EmailEventAdapterFactoryServiceDS extends AbstractAxis2Configuratio
         if (log.isDebugEnabled()) {
             log.debug("Un Setting the EventStreamService");
         }
-        EmailEventAdapterFactoryDataHolder.getInstance().setCarbonEventStreamService(null);
+        TenantResourceManagerDataHolder.getInstance().setCarbonEventStreamService(null);
 
     }
 
@@ -144,7 +143,7 @@ public class EmailEventAdapterFactoryServiceDS extends AbstractAxis2Configuratio
         if (log.isDebugEnabled()) {
             log.debug("Setting the CarbonEventPublisherService");
         }
-        EmailEventAdapterFactoryDataHolder.getInstance().setConfigurationManager(configurationManager);
+        TenantResourceManagerDataHolder.getInstance().setConfigurationManager(configurationManager);
 
     }
 
@@ -152,7 +151,7 @@ public class EmailEventAdapterFactoryServiceDS extends AbstractAxis2Configuratio
         if (log.isDebugEnabled()) {
             log.debug("Un Setting theCarbonEventPublisherService Service");
         }
-        EmailEventAdapterFactoryDataHolder.getInstance().setConfigurationManager(null);
+        TenantResourceManagerDataHolder.getInstance().setConfigurationManager(null);
 
     }
 
