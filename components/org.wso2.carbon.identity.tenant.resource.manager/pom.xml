@@ -46,7 +46,7 @@
         <dependency>
             <groupId>org.wso2.carbon.identity.framework</groupId>
             <artifactId>org.wso2.carbon.identity.configuration.mgt.core</artifactId>
-            <version>5.14.74-SNAPSHOT</version>
+            <version>5.14.35</version>
         </dependency>
     </dependencies>
 

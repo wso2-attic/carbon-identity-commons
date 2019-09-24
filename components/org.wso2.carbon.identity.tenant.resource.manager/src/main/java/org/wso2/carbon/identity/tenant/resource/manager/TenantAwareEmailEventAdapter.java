@@ -26,6 +26,7 @@ import org.wso2.carbon.event.output.adapter.core.OutputEventAdapterConfiguration
 import org.wso2.carbon.event.output.adapter.core.exception.ConnectionUnavailableException;
 import org.wso2.carbon.event.output.adapter.email.EmailEventAdapter;
 import org.wso2.carbon.identity.configuration.mgt.core.ConfigurationManager;
+import org.wso2.carbon.identity.configuration.mgt.core.constant.ConfigurationConstants;
 import org.wso2.carbon.identity.configuration.mgt.core.exception.ConfigurationManagementException;
 import org.wso2.carbon.identity.configuration.mgt.core.model.Attribute;
 import org.wso2.carbon.identity.configuration.mgt.core.model.Resource;
@@ -83,17 +84,25 @@ public class TenantAwareEmailEventAdapter extends EmailEventAdapter {
      */
     private List<Attribute> getTenantSpecificAttributeList() {
 
+        List<Attribute> attributesList = new ArrayList<>();
         TenantResourceManagerDataHolder tenantResourceManagerDataHolder = TenantResourceManagerDataHolder
                 .getInstance();
         ConfigurationManager configurationManager = tenantResourceManagerDataHolder.getConfigurationManager();
         try {
             Resource resource = configurationManager.getResource(RESOURCE_TYPE, RESOURCE);
-            return resource.getAttributes();
+            attributesList = resource.getAttributes();
+            for(Attribute attribute : attributesList){
+                if(attribute.getDataType() == ConfigurationConstants.AttributeTypes.ENCRYPTED_TEXT.getType()){
+                    attribute.setValue(decrypt(attribute.getValue()));
+                }
+            }
         } catch (ConfigurationManagementException e) {
             log.warn("Error retrieving tenant wise SMTP configurations: "+ e.getMessage() + " global properties will"
                     + " be used for the tenant id: " + CarbonContext.getThreadLocalCarbonContext().getTenantId());
+        } catch (CryptoException e) {
+            log.error("Error when decrypting configuration of tenant id: "+ CarbonContext.getThreadLocalCarbonContext().getTenantId());
         }
-        return new ArrayList<Attribute>(0);
+        return attributesList;
     }
 
     private String decrypt(String cipherText) throws CryptoException {
