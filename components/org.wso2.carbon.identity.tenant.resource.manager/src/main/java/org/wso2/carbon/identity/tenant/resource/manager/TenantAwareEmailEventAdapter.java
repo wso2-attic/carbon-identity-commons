@@ -92,7 +92,7 @@ public class TenantAwareEmailEventAdapter extends EmailEventAdapter {
             Resource resource = configurationManager.getResource(RESOURCE_TYPE, RESOURCE);
             attributesList = resource.getAttributes();
             for(Attribute attribute : attributesList){
-                if(attribute.getDataType() == ConfigurationConstants.AttributeTypes.ENCRYPTED_TEXT.getType()){
+                if(ConfigurationConstants.AttributeTypes.ENCRYPTED_TEXT.getType().equals(attribute.getDataType())){
                     attribute.setValue(decrypt(attribute.getValue()));
                 }
             }
