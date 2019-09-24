@@ -35,6 +35,11 @@ public class TenantAwareAxis2ConfigurationContextObserver extends AbstractAxis2C
 
     private static final Log log = LogFactory.getLog(TenantAwareAxis2ConfigurationContextObserver.class);
 
+    /**
+     * Add the tenant wise publisher and stream Configuration in tenant loading.
+     *
+     * @param tenantId tenant ID.
+     */
     public void creatingConfigurationContext(int tenantId) {
 
         log.info("creating configuration context for tenant id: " + tenantId);
@@ -94,6 +99,11 @@ public class TenantAwareAxis2ConfigurationContextObserver extends AbstractAxis2C
         }
     }
 
+    /**
+     * remove the tenant wise adapters in tenant unloading.
+     *
+     * @param configCtx ConfigurationContext.
+     */
     public void terminatingConfigurationContext(ConfigurationContext configCtx) {
 
         List<String> eventAdapterTypes = TenantResourceManagerDataHolder.getInstance()
