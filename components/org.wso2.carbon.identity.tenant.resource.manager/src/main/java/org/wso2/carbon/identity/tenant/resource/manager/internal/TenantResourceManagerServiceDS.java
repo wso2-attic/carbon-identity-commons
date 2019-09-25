@@ -69,10 +69,10 @@ public class TenantResourceManagerServiceDS extends AbstractAxis2ConfigurationCo
             context.getBundleContext().registerService(Axis2ConfigurationContextObserver.class.getName(),
                     tenantAwareAxis2ConfigurationContextObserver, null);
             if (log.isDebugEnabled()) {
-                log.debug("Successfully deployed the  org.wso2.carbon.event.email.pocservice");
+                log.debug("Successfully deployed the tenant resource manager service.");
             }
         } catch (RuntimeException e) {
-            log.error("Can not create the org.wso2.carbon.event.email.poc service ", e);
+            log.error("Can not create the tenant resource manager service.", e);
         }
     }
 
