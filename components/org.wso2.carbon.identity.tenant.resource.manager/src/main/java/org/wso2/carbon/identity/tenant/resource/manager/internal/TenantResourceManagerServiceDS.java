@@ -24,6 +24,9 @@ import org.wso2.carbon.event.output.adapter.core.OutputEventAdapterService;
 import org.wso2.carbon.event.publisher.core.EventPublisherService;
 import org.wso2.carbon.event.stream.core.EventStreamService;
 import org.wso2.carbon.identity.configuration.mgt.core.ConfigurationManager;
+import org.wso2.carbon.identity.governance.IdentityGovernanceService;
+import org.wso2.carbon.identity.governance.common.IdentityConnectorConfig;
+import org.wso2.carbon.identity.tenant.resource.manager.EmailConnectorConfigImpl;
 import org.wso2.carbon.identity.tenant.resource.manager.IdentityEmailEventAdapterFactory;
 import org.wso2.carbon.identity.tenant.resource.manager.TenantAwareAxis2ConfigurationContextObserver;
 import org.wso2.carbon.utils.AbstractAxis2ConfigurationContextObserver;
@@ -46,7 +49,12 @@ import org.wso2.carbon.utils.Axis2ConfigurationContextObserver;
  * @scr.reference name="configurationDAO"
  * interface="org.wso2.carbon.identity.configuration.mgt.core.ConfigurationManager" cardinality="1..1"
  * policy="dynamic" bind="setConfigurationManager" unbind="unsetConfigurationManager"
- */
+ * @scr.reference name="IdentityGovernanceService
+ * interface="org.wso2.carbon.identity.governance.IdentityGovernanceService" cardinality="1..1"
+ * policy="dynamic" bind="setIdentityGovernanceService" unbind="unsetIdentityGovernanceService"
+ * */
+
+
 public class TenantResourceManagerServiceDS extends AbstractAxis2ConfigurationContextObserver {
 
     private static final Log log = LogFactory.getLog(TenantResourceManagerServiceDS.class);
@@ -68,6 +76,7 @@ public class TenantResourceManagerServiceDS extends AbstractAxis2ConfigurationCo
 
             context.getBundleContext().registerService(Axis2ConfigurationContextObserver.class.getName(),
                     tenantAwareAxis2ConfigurationContextObserver, null);
+            context.getBundleContext().registerService(IdentityConnectorConfig.class.getName(), new EmailConnectorConfigImpl(), null);
             if (log.isDebugEnabled()) {
                 log.debug("Successfully deployed the tenant resource manager service.");
             }
@@ -152,6 +161,22 @@ public class TenantResourceManagerServiceDS extends AbstractAxis2ConfigurationCo
             log.debug("Un Setting theCarbonEventPublisherService Service");
         }
         TenantResourceManagerDataHolder.getInstance().setConfigurationManager(null);
+
+    }
+
+    protected void setIdentityGovernanceService(IdentityGovernanceService identityGovernanceService){
+        if (log.isDebugEnabled()) {
+            log.debug("Setting the CarbonEventPublisherService");
+        }
+        TenantResourceManagerDataHolder.getInstance().setIdentityGovernanceService(identityGovernanceService);
+
+    }
+
+    protected void unsetIdentityGovernanceService(IdentityGovernanceService identityGovernanceService){
+        if (log.isDebugEnabled()) {
+            log.debug("Un Setting theCarbonEventPublisherService Service");
+        }
+        TenantResourceManagerDataHolder.getInstance().setIdentityGovernanceService(null);
 
     }
 
