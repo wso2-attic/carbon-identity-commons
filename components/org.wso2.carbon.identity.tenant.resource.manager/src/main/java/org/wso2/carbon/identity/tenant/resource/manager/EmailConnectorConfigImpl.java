@@ -61,6 +61,11 @@ public class EmailConnectorConfigImpl implements IdentityConnectorConfig {
     @Override
     public Map<String, String> getPropertyDescriptionMapping() {
         Map<String, String> descriptionMapping = new HashMap<>();
+        descriptionMapping.put(EmailConnectorConstants.EMAIL_SMTP_FROM,
+                "Provide the email address of the SMTP account. Example: abcd@gmail.com");
+        descriptionMapping.put(EmailConnectorConstants.EMAIL_SMTP_USER,
+                "Provide the username of the SMTP account. Example: abcd");
+        descriptionMapping.put(EmailConnectorConstants.EMAIL_SMTP_PASSWORD, "Provide the password of the SMTP account.");
         return descriptionMapping;
     }
 

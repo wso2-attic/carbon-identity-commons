@@ -21,6 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.context.PrivilegedCarbonContext;
 import org.wso2.carbon.event.publisher.core.config.EventPublisherConfiguration;
+import org.wso2.carbon.event.publisher.core.exception.EventPublisherConfigurationException;
 import org.wso2.carbon.event.stream.core.EventStreamConfiguration;
 import org.wso2.carbon.identity.tenant.resource.manager.internal.TenantResourceManagerDataHolder;
 import org.wso2.carbon.utils.AbstractAxis2ConfigurationContextObserver;
@@ -99,20 +100,5 @@ public class TenantAwareAxis2ConfigurationContextObserver extends AbstractAxis2C
         }
     }
 
-    /**
-     * remove the tenant wise adapters in tenant unloading.
-     *
-     * @param configCtx ConfigurationContext.
-     */
-    public void terminatingConfigurationContext(ConfigurationContext configCtx) {
-
-        List<String> eventAdapterTypes = TenantResourceManagerDataHolder.getInstance()
-                .getCarbonOutputEventAdapterService().getOutputEventAdapterTypes();
-
-        for (String eventAdapter : eventAdapterTypes) {
-            TenantResourceManagerDataHolder.getInstance().getCarbonOutputEventAdapterService().destroy(eventAdapter);
-        }
-
-    }
 
 }

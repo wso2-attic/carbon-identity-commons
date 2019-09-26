@@ -17,23 +17,20 @@
 package org.wso2.carbon.identity.tenant.resource.manager;
 
 import org.apache.commons.io.Charsets;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.wso2.carbon.context.CarbonContext;
+import org.wso2.carbon.context.PrivilegedCarbonContext;
 import org.wso2.carbon.core.util.CryptoException;
 import org.wso2.carbon.core.util.CryptoUtil;
 import org.wso2.carbon.event.output.adapter.core.OutputEventAdapterConfiguration;
 import org.wso2.carbon.event.output.adapter.core.exception.ConnectionUnavailableException;
 import org.wso2.carbon.event.output.adapter.email.EmailEventAdapter;
-import org.wso2.carbon.identity.configuration.mgt.core.ConfigurationManager;
-import org.wso2.carbon.identity.configuration.mgt.core.constant.ConfigurationConstants;
-import org.wso2.carbon.identity.configuration.mgt.core.exception.ConfigurationManagementException;
-import org.wso2.carbon.identity.configuration.mgt.core.model.Attribute;
-import org.wso2.carbon.identity.configuration.mgt.core.model.Resource;
+import org.wso2.carbon.identity.application.common.model.Property;
+import org.wso2.carbon.identity.governance.IdentityGovernanceException;
+import org.wso2.carbon.identity.governance.IdentityGovernanceService;
 import org.wso2.carbon.identity.tenant.resource.manager.internal.TenantResourceManagerDataHolder;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,8 +39,6 @@ import java.util.Map;
 public class TenantAwareEmailEventAdapter extends EmailEventAdapter {
     private static final Log log = LogFactory.getLog(TenantAwareEmailEventAdapter.class);
     private Map<String, String> globalProperties;
-    private final String RESOURCE_TYPE = "mail";
-    private final String RESOURCE = "smtp";
 
     /**
      * Default from address for outgoing messages.
@@ -68,11 +63,10 @@ public class TenantAwareEmailEventAdapter extends EmailEventAdapter {
      */
     private void replaceGlobalPropertiesWithTenantProperties() {
 
-        List<Attribute> attributeList = getTenantSpecificAttributeList();
-        for (Attribute attribute : attributeList) {
-            String key = RESOURCE_TYPE + "." + RESOURCE + "." + attribute.getKey();
-            if (globalProperties.containsKey(key)) {
-                globalProperties.put(key, attribute.getValue());
+        Property[] propertyList = getTenantSpecificAttributeList();
+        for (Property property : propertyList) {
+            if (globalProperties.containsKey(property.getName()) && !StringUtils.isEmpty(property.getValue())) {
+                globalProperties.put(property.getName(), property.getValue());
             }
         }
 
@@ -80,34 +74,25 @@ public class TenantAwareEmailEventAdapter extends EmailEventAdapter {
 
     /**
      * Get tenant specific configurations from config store.
-     *
      */
-    private List<Attribute> getTenantSpecificAttributeList() {
+    private Property[] getTenantSpecificAttributeList() {
 
-        List<Attribute> attributesList = new ArrayList<>();
-        TenantResourceManagerDataHolder tenantResourceManagerDataHolder = TenantResourceManagerDataHolder
-                .getInstance();
-        ConfigurationManager configurationManager = tenantResourceManagerDataHolder.getConfigurationManager();
+        TenantResourceManagerDataHolder tenantResourceManagerDataHolder = TenantResourceManagerDataHolder.getInstance();
+        IdentityGovernanceService identityGovernanceService = tenantResourceManagerDataHolder
+                .getIdentityGovernanceService();
         try {
-            Resource resource = configurationManager.getResource(RESOURCE_TYPE, RESOURCE);
-            attributesList = resource.getAttributes();
-            for(Attribute attribute : attributesList){
-                if(ConfigurationConstants.AttributeTypes.ENCRYPTED_TEXT.getType().equals(attribute.getDataType())){
-                    attribute.setValue(decrypt(attribute.getValue()));
-                }
-            }
-        } catch (ConfigurationManagementException e) {
-            log.warn("Error retrieving tenant wise SMTP configurations: "+ e.getMessage() + " global properties will"
-                    + " be used for the tenant id: " + CarbonContext.getThreadLocalCarbonContext().getTenantId());
-        } catch (CryptoException e) {
-            log.error("Error when decrypting configuration of tenant id: "+ CarbonContext.getThreadLocalCarbonContext().getTenantId());
+            return identityGovernanceService.getConfiguration(globalProperties.keySet().toArray(new String[0]),
+                    PrivilegedCarbonContext.getThreadLocalCarbonContext().getTenantDomain(true));
+
+        } catch (IdentityGovernanceException e) {
+            log.warn("Error occurred when retrieving tenant wise configurations global configurations will be used.",
+                    e);
         }
-        return attributesList;
+        return new Property[0];
     }
 
     private String decrypt(String cipherText) throws CryptoException {
-        return new String(CryptoUtil.getDefaultCryptoUtil().base64DecodeAndDecrypt(
-                cipherText), Charsets.UTF_8);
+        return new String(CryptoUtil.getDefaultCryptoUtil().base64DecodeAndDecrypt(cipherText), Charsets.UTF_8);
     }
 
 }
