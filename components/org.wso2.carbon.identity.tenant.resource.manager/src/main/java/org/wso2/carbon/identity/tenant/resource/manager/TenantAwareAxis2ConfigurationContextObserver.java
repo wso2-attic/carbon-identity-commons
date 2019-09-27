@@ -21,6 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.context.PrivilegedCarbonContext;
 import org.wso2.carbon.event.publisher.core.config.EventPublisherConfiguration;
+import org.wso2.carbon.event.publisher.core.config.EventPublisherConfigurationFile;
 import org.wso2.carbon.event.publisher.core.exception.EventPublisherConfigurationException;
 import org.wso2.carbon.event.stream.core.EventStreamConfiguration;
 import org.wso2.carbon.identity.tenant.resource.manager.internal.TenantResourceManagerDataHolder;
@@ -84,7 +85,11 @@ public class TenantAwareAxis2ConfigurationContextObserver extends AbstractAxis2C
             for (EventPublisherConfiguration eventPublisherConfiguration : activeEventPublisherConfigurations) {
                 if (TenantResourceManagerDataHolder.getInstance().getCarbonEventPublisherService()
                         .getActiveEventPublisherConfiguration(eventPublisherConfiguration.getEventPublisherName())
-                        == null) {
+                        != null) {
+                    destroyExistingEventPublisher(eventPublisherConfiguration,
+                            PrivilegedCarbonContext.getThreadLocalCarbonContext().getTenantId());
+
+                } else {
                     TenantResourceManagerDataHolder.getInstance().getCarbonEventPublisherService()
                             .addEventPublisherConfiguration(eventPublisherConfiguration);
                 }
@@ -100,5 +105,24 @@ public class TenantAwareAxis2ConfigurationContextObserver extends AbstractAxis2C
         }
     }
 
+    /**
+     * destroy currently active event publisher deployed per tenant.
+     *
+     * @param eventPublisherConfiguration Event Publisher Configuration.
+     * @param tenantId tenant ID.
+     */
+    private void destroyExistingEventPublisher(EventPublisherConfiguration eventPublisherConfiguration,
+            int tenantId) throws EventPublisherConfigurationException {
+
+        EventPublisherConfigurationFile eventPublisherConfigurationFile = new EventPublisherConfigurationFile();
+        eventPublisherConfigurationFile.setTenantId(tenantId);
+        eventPublisherConfigurationFile.setEventPublisherName(eventPublisherConfiguration.getEventPublisherName());
+        eventPublisherConfigurationFile.setStatus(EventPublisherConfigurationFile.Status.DEPLOYED);
+        TenantResourceManagerDataHolder.getInstance().getCarbonEventPublisherService()
+                .addEventPublisherConfigurationFile(eventPublisherConfigurationFile, tenantId);
+        TenantResourceManagerDataHolder.getInstance().getCarbonEventPublisherService()
+                .removeEventPublisherConfigurationFile(eventPublisherConfiguration.getEventPublisherName(), tenantId);
+    }
 
 }
+

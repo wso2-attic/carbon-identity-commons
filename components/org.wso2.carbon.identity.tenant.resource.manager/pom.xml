@@ -98,6 +98,8 @@
                             .range}",
                             org.wso2.carbon.event.publisher.core; version="${carbon.analytics.common.version
                             .range}",
+                            org.wso2.carbon.event.publisher.core.exception; version="${carbon.analytics.common.version
+                            .range}",
                             org.wso2.carbon.event.publisher.core.config; version="${carbon.analytics.common.version
                             .range}",
                             org.wso2.carbon.event.stream.core; version="${carbon.analytics.common.version

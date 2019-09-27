@@ -127,7 +127,7 @@
         </carbon.identity.framework.imp.pkg.version.range>
         <carbon.kernel.package.import.version.range>[4.5.0, 5.0.0)</carbon.kernel.package.import.version.range>
 
-        <carbon.analytics.common.version>5.2.11-SNAPSHOT</carbon.analytics.common.version>
+        <carbon.analytics.common.version>5.2.12-SNAPSHOT</carbon.analytics.common.version>
         <carbon.analytics.common.version.range>[5.2.10,6.0.0)</carbon.analytics.common.version.range>
         <axis2.osgi.version.range>[1.6.1.wso2v38, 2.0.0)</axis2.osgi.version.range>
         <apache.commons.logging.package.import.version.range>[1.2.0,2.0.0)</apache.commons.logging.package.import.version.range>
