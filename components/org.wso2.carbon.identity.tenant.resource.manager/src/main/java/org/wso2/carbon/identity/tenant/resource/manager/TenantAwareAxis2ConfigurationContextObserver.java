@@ -89,10 +89,9 @@ public class TenantAwareAxis2ConfigurationContextObserver extends AbstractAxis2C
                     destroyExistingEventPublisher(eventPublisherConfiguration,
                             PrivilegedCarbonContext.getThreadLocalCarbonContext().getTenantId());
 
-                } else {
-                    TenantResourceManagerDataHolder.getInstance().getCarbonEventPublisherService()
-                            .addEventPublisherConfiguration(eventPublisherConfiguration);
                 }
+                TenantResourceManagerDataHolder.getInstance().getCarbonEventPublisherService()
+                        .addEventPublisherConfiguration(eventPublisherConfiguration);
 
             }
 
@@ -117,6 +116,7 @@ public class TenantAwareAxis2ConfigurationContextObserver extends AbstractAxis2C
         EventPublisherConfigurationFile eventPublisherConfigurationFile = new EventPublisherConfigurationFile();
         eventPublisherConfigurationFile.setTenantId(tenantId);
         eventPublisherConfigurationFile.setEventPublisherName(eventPublisherConfiguration.getEventPublisherName());
+        eventPublisherConfigurationFile.setFileName(eventPublisherConfiguration.getEventPublisherName());
         eventPublisherConfigurationFile.setStatus(EventPublisherConfigurationFile.Status.DEPLOYED);
         TenantResourceManagerDataHolder.getInstance().getCarbonEventPublisherService()
                 .addEventPublisherConfigurationFile(eventPublisherConfigurationFile, tenantId);
