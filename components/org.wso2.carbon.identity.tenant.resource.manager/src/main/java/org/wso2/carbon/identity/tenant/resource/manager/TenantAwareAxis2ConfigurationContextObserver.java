@@ -72,27 +72,31 @@ public class TenantAwareAxis2ConfigurationContextObserver extends AbstractAxis2C
             PrivilegedCarbonContext.getThreadLocalCarbonContext().setTenantId(tenantId);
             PrivilegedCarbonContext.getThreadLocalCarbonContext().setTenantDomain(tenantDomain);
 
-            for (EventStreamConfiguration eventStreamConfiguration : eventStreamConfigurationList) {
-                if (TenantResourceManagerDataHolder.getInstance().getCarbonEventStreamService()
-                        .getEventStreamConfiguration(eventStreamConfiguration.getStreamDefinition().getStreamId())
-                        == null) {
-                    TenantResourceManagerDataHolder.getInstance().getCarbonEventStreamService()
-                            .addEventStreamConfig(eventStreamConfiguration);
+            if (eventStreamConfigurationList != null) {
+                for (EventStreamConfiguration eventStreamConfiguration : eventStreamConfigurationList) {
+                    if (TenantResourceManagerDataHolder.getInstance().getCarbonEventStreamService()
+                            .getEventStreamConfiguration(eventStreamConfiguration.getStreamDefinition().getStreamId())
+                            == null) {
+                        TenantResourceManagerDataHolder.getInstance().getCarbonEventStreamService()
+                                .addEventStreamConfig(eventStreamConfiguration);
 
+                    }
                 }
             }
 
-            for (EventPublisherConfiguration eventPublisherConfiguration : activeEventPublisherConfigurations) {
-                if (TenantResourceManagerDataHolder.getInstance().getCarbonEventPublisherService()
-                        .getActiveEventPublisherConfiguration(eventPublisherConfiguration.getEventPublisherName())
-                        != null) {
-                    destroyExistingEventPublisher(eventPublisherConfiguration,
-                            PrivilegedCarbonContext.getThreadLocalCarbonContext().getTenantId());
+            if (activeEventPublisherConfigurations != null) {
+                for (EventPublisherConfiguration eventPublisherConfiguration : activeEventPublisherConfigurations) {
+                    if (TenantResourceManagerDataHolder.getInstance().getCarbonEventPublisherService()
+                            .getActiveEventPublisherConfiguration(eventPublisherConfiguration.getEventPublisherName())
+                            != null) {
+                        destroyExistingEventPublisher(eventPublisherConfiguration,
+                                PrivilegedCarbonContext.getThreadLocalCarbonContext().getTenantId());
+
+                    }
+                    TenantResourceManagerDataHolder.getInstance().getCarbonEventPublisherService()
+                            .addEventPublisherConfiguration(eventPublisherConfiguration);
 
                 }
-                TenantResourceManagerDataHolder.getInstance().getCarbonEventPublisherService()
-                        .addEventPublisherConfiguration(eventPublisherConfiguration);
-
             }
 
         } catch (Exception e) {
