@@ -16,7 +16,6 @@
 
 package org.wso2.carbon.identity.tenant.resource.manager;
 
-import org.apache.axis2.context.ConfigurationContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.context.PrivilegedCarbonContext;
@@ -66,7 +65,6 @@ public class TenantAwareAxis2ConfigurationContextObserver extends AbstractAxis2C
         } finally {
             PrivilegedCarbonContext.endTenantFlow();
         }
-
         try {
             PrivilegedCarbonContext.startTenantFlow();
             PrivilegedCarbonContext.getThreadLocalCarbonContext().setTenantId(tenantId);
@@ -79,7 +77,6 @@ public class TenantAwareAxis2ConfigurationContextObserver extends AbstractAxis2C
                             == null) {
                         TenantResourceManagerDataHolder.getInstance().getCarbonEventStreamService()
                                 .addEventStreamConfig(eventStreamConfiguration);
-
                     }
                 }
             }
@@ -95,7 +92,6 @@ public class TenantAwareAxis2ConfigurationContextObserver extends AbstractAxis2C
                     }
                     TenantResourceManagerDataHolder.getInstance().getCarbonEventPublisherService()
                             .addEventPublisherConfiguration(eventPublisherConfiguration);
-
                 }
             }
 

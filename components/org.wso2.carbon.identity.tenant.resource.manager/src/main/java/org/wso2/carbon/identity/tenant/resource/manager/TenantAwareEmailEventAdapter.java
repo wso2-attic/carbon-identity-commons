@@ -56,7 +56,6 @@ public class TenantAwareEmailEventAdapter extends EmailEventAdapter {
 
     }
 
-
     /**
      * Replace configs from output-event-adapters.xml by tenant wise configurations.
      *
