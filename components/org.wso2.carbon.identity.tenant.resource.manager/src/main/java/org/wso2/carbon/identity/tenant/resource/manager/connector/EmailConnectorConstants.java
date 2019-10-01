@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package org.wso2.carbon.identity.tenant.resource.manager;
+package org.wso2.carbon.identity.tenant.resource.manager.connector;
 
 public class EmailConnectorConstants {
     public static final String EMAIL_SMTP_FROM = "mail.smtp.from";

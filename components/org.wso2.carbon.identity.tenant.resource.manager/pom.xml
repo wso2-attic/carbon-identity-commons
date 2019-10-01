@@ -32,7 +32,6 @@
             <groupId>org.wso2.carbon.analytics-common</groupId>
             <artifactId>org.wso2.carbon.event.publisher.core</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.core</artifactId>
@@ -44,6 +43,21 @@
         <dependency>
             <groupId>org.wso2.carbon.identity.governance</groupId>
             <artifactId>org.wso2.carbon.identity.governance</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-testng</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -81,10 +95,6 @@
                             org.wso2.carbon.identity.tenant.resource.manager.*,
                         </Export-Package>
                         <Import-Package>
-
-                            org.osgi.service.component; version="${osgi.service.component.package.import.version.range}",
-                        </Import-Package>
-                        <Import-Package>
                             org.apache.commons.*; version="1.2.0",
                             org.osgi.framework; version="${osgi.service.component.package.import.version.range}",
                             org.osgi.service.component; version="${osgi.service.component.package.import.version.range}",
@@ -115,7 +125,6 @@
                             org.wso2.carbon.identity.governance.*,
                         </Import-Package>
                     </instructions>
-
                 </configuration>
             </plugin>
             <plugin>
@@ -126,8 +135,19 @@
                     <target>8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.plugin.version}</version>
+                <configuration>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                    <classpathDependencyExcludes>
+                        <classpathDependencyExclude>org.ops4j.pax.logging</classpathDependencyExclude>
+                    </classpathDependencyExcludes>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
-
 </project>

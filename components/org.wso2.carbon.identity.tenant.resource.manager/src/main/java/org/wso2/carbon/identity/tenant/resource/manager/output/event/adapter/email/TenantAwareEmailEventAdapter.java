@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package org.wso2.carbon.identity.tenant.resource.manager;
+package org.wso2.carbon.identity.tenant.resource.manager.output.event.adapter.email;
 
 import org.apache.commons.io.Charsets;
 import org.apache.commons.lang.StringUtils;
@@ -58,7 +58,6 @@ public class TenantAwareEmailEventAdapter extends EmailEventAdapter {
 
     /**
      * Replace configs from output-event-adapters.xml by tenant wise configurations.
-     *
      */
     private void replaceGlobalPropertiesWithTenantProperties() {
 

@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package org.wso2.carbon.identity.tenant.resource.manager;
+package org.wso2.carbon.identity.tenant.resource.manager.output.event.adapter.email;
 
 import org.wso2.carbon.event.output.adapter.core.MessageType;
 import org.wso2.carbon.event.output.adapter.core.OutputEventAdapter;
@@ -25,6 +25,7 @@ import org.wso2.carbon.event.output.adapter.email.EmailEventAdapterFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 /**
  * EmailEventAdapterFactory cannot generate tenant wise adapters hence new factory created.
  * IdentityEmailEventAdapterFactory for identity server.
