@@ -97,7 +97,8 @@
                         <Import-Package>
                             org.apache.commons.*; version="1.2.0",
                             org.osgi.framework; version="${osgi.service.component.package.import.version.range}",
-                            org.osgi.service.component; version="${osgi.service.component.package.import.version.range}",
+                            org.osgi.service.component;
+                            version="${osgi.service.component.package.import.version.range}",
                             org.wso2.carbon.context; version="${carbon.kernel.package.import.version.range}",
                             org.wso2.carbon.core.util; version="${carbon.kernel.package.import.version.range}",
                             org.wso2.carbon.databridge.commons; version="${carbon.analytics.common.version

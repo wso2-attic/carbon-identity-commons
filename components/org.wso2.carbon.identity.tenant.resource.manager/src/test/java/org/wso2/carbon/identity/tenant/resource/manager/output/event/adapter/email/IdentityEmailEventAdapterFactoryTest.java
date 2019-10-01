@@ -38,7 +38,7 @@ public class IdentityEmailEventAdapterFactoryTest {
     @Test
     public void testGetType() {
 
-        Assert.assertEquals(identityEmailEventAdapterFactory.getType(),"email-is");
+        Assert.assertEquals(identityEmailEventAdapterFactory.getType(), "email-is");
     }
 
     @Test

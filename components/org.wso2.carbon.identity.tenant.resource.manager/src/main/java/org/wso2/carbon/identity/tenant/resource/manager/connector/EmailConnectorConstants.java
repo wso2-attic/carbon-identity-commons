@@ -16,7 +16,11 @@
 
 package org.wso2.carbon.identity.tenant.resource.manager.connector;
 
+/**
+ * Constants of the email governance connector.
+ */
 public class EmailConnectorConstants {
+
     public static final String EMAIL_SMTP_FROM = "mail.smtp.from";
     public static final String EMAIL_SMTP_USER = "mail.smtp.user";
     public static final String EMAIL_SMTP_PASSWORD = "mail.smtp.password";

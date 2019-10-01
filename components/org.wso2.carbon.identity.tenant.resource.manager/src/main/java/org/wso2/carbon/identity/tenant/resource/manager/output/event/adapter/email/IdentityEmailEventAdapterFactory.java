@@ -37,6 +37,7 @@ public class IdentityEmailEventAdapterFactory extends EmailEventAdapterFactory {
     }
 
     public List<String> getSupportedMessageFormats() {
+
         List<String> supportedMessageFormats = new ArrayList<String>();
         supportedMessageFormats.add(MessageType.TEXT);
         supportedMessageFormats.add(MessageType.XML);
@@ -48,11 +49,9 @@ public class IdentityEmailEventAdapterFactory extends EmailEventAdapterFactory {
         return null;
     }
 
-
     public String getUsageTips() {
         return null;
     }
-
 
     public OutputEventAdapter createEventAdapter(OutputEventAdapterConfiguration outputEventAdapterConfiguration,
             Map<String, String> map) {

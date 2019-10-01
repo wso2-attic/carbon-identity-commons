@@ -51,31 +51,24 @@ public class EmailConnectorConfigImplTest {
 
     @Test
     public void testGetCategory() {
-        Assert.assertEquals(emailConnectorConfig.getCategory(),CATEGORY);
+        Assert.assertEquals(emailConnectorConfig.getCategory(), CATEGORY);
     }
 
     @Test
     public void testGetSubCategory() {
-        Assert.assertEquals(emailConnectorConfig.getSubCategory(),"DEFAULT");
+        Assert.assertEquals(emailConnectorConfig.getSubCategory(), "DEFAULT");
     }
-
 
     @Test
     public void testGetPropertyNameMapping() {
 
         Map<String, String> nameMappingExpected = new HashMap<>();
-        nameMappingExpected.put(EmailConnectorConstants.EMAIL_SMTP_FROM,
-                "FROM Email Address");
-        nameMappingExpected.put(EmailConnectorConstants.EMAIL_SMTP_USER,
-                "SMTP Server User Name");
-        nameMappingExpected.put(EmailConnectorConstants.EMAIL_SMTP_PASSWORD,
-                "SMTP Server Password");
-        nameMappingExpected.put(EmailConnectorConstants.EMAIL_SMTP_HOST,
-                "SMTP Server Host");
-        nameMappingExpected.put(EmailConnectorConstants.EMAIL_SMTP_PORT,
-                "SMTP Server Port");
-        nameMappingExpected.put(EmailConnectorConstants.EMAIL_SMTP_START_TLS,
-                "Enable Start TLS");
+        nameMappingExpected.put(EmailConnectorConstants.EMAIL_SMTP_FROM, "FROM Email Address");
+        nameMappingExpected.put(EmailConnectorConstants.EMAIL_SMTP_USER, "SMTP Server User Name");
+        nameMappingExpected.put(EmailConnectorConstants.EMAIL_SMTP_PASSWORD, "SMTP Server Password");
+        nameMappingExpected.put(EmailConnectorConstants.EMAIL_SMTP_HOST, "SMTP Server Host");
+        nameMappingExpected.put(EmailConnectorConstants.EMAIL_SMTP_PORT, "SMTP Server Port");
+        nameMappingExpected.put(EmailConnectorConstants.EMAIL_SMTP_START_TLS, "Enable Start TLS");
         nameMappingExpected.put(EmailConnectorConstants.EMAIL_SMTP_AUTH, "Enable SMTP Sever Auth");
 
         Assert.assertEquals(emailConnectorConfig.getPropertyNameMapping(), nameMappingExpected, "Maps are not equal");
@@ -89,9 +82,11 @@ public class EmailConnectorConfigImplTest {
                 "Provide the email address of the SMTP account. Example: abcd@gmail.com");
         descriptionMappingExpected.put(EmailConnectorConstants.EMAIL_SMTP_USER,
                 "Provide the username of the SMTP account. Example: abcd");
-        descriptionMappingExpected.put(EmailConnectorConstants.EMAIL_SMTP_PASSWORD, "Provide the password of the SMTP account.");
+        descriptionMappingExpected
+                .put(EmailConnectorConstants.EMAIL_SMTP_PASSWORD, "Provide the password of the SMTP account.");
 
-        Assert.assertEquals(emailConnectorConfig.getPropertyDescriptionMapping(),descriptionMappingExpected, "Maps are not equal");
+        Assert.assertEquals(emailConnectorConfig.getPropertyDescriptionMapping(), descriptionMappingExpected,
+                "Maps are not equal");
     }
 
     @Test
@@ -115,18 +110,18 @@ public class EmailConnectorConfigImplTest {
 
         Map<String, String> defaultProperties = new HashMap<>();
         defaultProperties.put(EmailConnectorConstants.EMAIL_SMTP_FROM, "");
-        defaultProperties.put(EmailConnectorConstants.EMAIL_SMTP_USER,"");
-        defaultProperties.put(EmailConnectorConstants.EMAIL_SMTP_PASSWORD,"");
-        defaultProperties.put(EmailConnectorConstants.EMAIL_SMTP_HOST,"");
-        defaultProperties.put(EmailConnectorConstants.EMAIL_SMTP_PORT,"");
-        defaultProperties.put(EmailConnectorConstants.EMAIL_SMTP_START_TLS,"true");
-        defaultProperties.put(EmailConnectorConstants.EMAIL_SMTP_AUTH,"true");
+        defaultProperties.put(EmailConnectorConstants.EMAIL_SMTP_USER, "");
+        defaultProperties.put(EmailConnectorConstants.EMAIL_SMTP_PASSWORD, "");
+        defaultProperties.put(EmailConnectorConstants.EMAIL_SMTP_HOST, "");
+        defaultProperties.put(EmailConnectorConstants.EMAIL_SMTP_PORT, "");
+        defaultProperties.put(EmailConnectorConstants.EMAIL_SMTP_START_TLS, "true");
+        defaultProperties.put(EmailConnectorConstants.EMAIL_SMTP_AUTH, "true");
 
         Properties propertiesExpected = new Properties();
         propertiesExpected.putAll(defaultProperties);
 
-        Assert.assertEquals(emailConnectorConfig.getDefaultPropertyValues(""), propertiesExpected, "Default "
-                + "Properties not equal");
+        Assert.assertEquals(emailConnectorConfig.getDefaultPropertyValues(""), propertiesExpected,
+                "Default properties are not equal");
     }
 
 }

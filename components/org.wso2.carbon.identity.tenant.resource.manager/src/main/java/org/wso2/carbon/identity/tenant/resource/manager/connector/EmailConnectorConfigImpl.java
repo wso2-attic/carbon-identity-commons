@@ -26,6 +26,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * Governance email connector config implementation.
+ */
 public class EmailConnectorConfigImpl implements IdentityConnectorConfig {
 
     private static String connectorName = "email-output-adapter-configuration";

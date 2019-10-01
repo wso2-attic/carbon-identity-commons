@@ -56,8 +56,8 @@ public class TenantAwareAxis2ConfigurationContextObserver extends AbstractAxis2C
             activeEventPublisherConfigurations = TenantResourceManagerDataHolder.getInstance()
                     .getEventPublisherService().getAllActiveEventPublisherConfigurations();
 
-            eventStreamConfigurationList = TenantResourceManagerDataHolder.getInstance()
-                    .getCarbonEventStreamService().getAllEventStreamConfigurations();
+            eventStreamConfigurationList = TenantResourceManagerDataHolder.getInstance().getCarbonEventStreamService()
+                    .getAllEventStreamConfigurations();
 
         } catch (Exception e) {
             log.error("Error occurred while loading super tenant publisher configurations for the tenant with ID: "
@@ -108,10 +108,10 @@ public class TenantAwareAxis2ConfigurationContextObserver extends AbstractAxis2C
      * destroy currently active event publisher deployed per tenant.
      *
      * @param eventPublisherConfiguration Event Publisher Configuration.
-     * @param tenantId tenant ID.
+     * @param tenantId                    tenant ID.
      */
-    private void destroyExistingEventPublisher(EventPublisherConfiguration eventPublisherConfiguration,
-            int tenantId) throws EventPublisherConfigurationException {
+    private void destroyExistingEventPublisher(EventPublisherConfiguration eventPublisherConfiguration, int tenantId)
+            throws EventPublisherConfigurationException {
 
         EventPublisherConfigurationFile eventPublisherConfigurationFile = new EventPublisherConfigurationFile();
         eventPublisherConfigurationFile.setTenantId(tenantId);

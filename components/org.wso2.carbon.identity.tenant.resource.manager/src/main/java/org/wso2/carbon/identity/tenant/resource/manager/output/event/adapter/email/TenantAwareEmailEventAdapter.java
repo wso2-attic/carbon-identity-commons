@@ -45,6 +45,7 @@ public class TenantAwareEmailEventAdapter extends EmailEventAdapter {
      */
     public TenantAwareEmailEventAdapter(OutputEventAdapterConfiguration eventAdapterConfiguration,
             Map<String, String> globalProperties) {
+
         super(eventAdapterConfiguration, globalProperties);
         this.globalProperties = globalProperties;
     }

@@ -178,7 +178,5 @@
         <identity.event.package.export.version>${carbon.identity.commons.version}</identity.event.package.export.version>
         <identity.common.package.export.version>${carbon.identity.commons.version}</identity.common.package.export.version>
         <identity.keystore.package.export.version>${carbon.identity.commons.version}</identity.keystore.package.export.version>
-
     </properties>
-
 </project>

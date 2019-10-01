@@ -52,7 +52,7 @@ import org.wso2.carbon.utils.Axis2ConfigurationContextObserver;
  * @scr.reference name="IdentityGovernanceService
  * interface="org.wso2.carbon.identity.governance.IdentityGovernanceService" cardinality="1..1"
  * policy="dynamic" bind="setIdentityGovernanceService" unbind="unsetIdentityGovernanceService"
- * */
+ */
 public class TenantResourceManagerServiceDS extends AbstractAxis2ConfigurationContextObserver {
 
     private static final Log log = LogFactory.getLog(TenantResourceManagerServiceDS.class);
@@ -66,14 +66,14 @@ public class TenantResourceManagerServiceDS extends AbstractAxis2ConfigurationCo
 
         try {
             IdentityEmailEventAdapterFactory identityEmailEventAdapterFactory = new IdentityEmailEventAdapterFactory();
-            context.getBundleContext().registerService(OutputEventAdapterFactory.class.getName(),
-                    identityEmailEventAdapterFactory, null);
-            TenantAwareAxis2ConfigurationContextObserver tenantAwareAxis2ConfigurationContextObserver =
-                    new TenantAwareAxis2ConfigurationContextObserver();
+            context.getBundleContext()
+                    .registerService(OutputEventAdapterFactory.class.getName(), identityEmailEventAdapterFactory, null);
+            TenantAwareAxis2ConfigurationContextObserver tenantAwareAxis2ConfigurationContextObserver = new TenantAwareAxis2ConfigurationContextObserver();
 
             context.getBundleContext().registerService(Axis2ConfigurationContextObserver.class.getName(),
                     tenantAwareAxis2ConfigurationContextObserver, null);
-            context.getBundleContext().registerService(IdentityConnectorConfig.class.getName(), new EmailConnectorConfigImpl(), null);
+            context.getBundleContext()
+                    .registerService(IdentityConnectorConfig.class.getName(), new EmailConnectorConfigImpl(), null);
             if (log.isDebugEnabled()) {
                 log.debug("Successfully deployed the tenant resource manager service.");
             }
@@ -96,36 +96,37 @@ public class TenantResourceManagerServiceDS extends AbstractAxis2ConfigurationCo
         TenantResourceManagerDataHolder.getInstance().setEventPublisherService(null);
     }
 
-    protected void setCarbonOutputEventAdapterService(OutputEventAdapterService carbonOutputEventAdapterService){
+    protected void setCarbonOutputEventAdapterService(OutputEventAdapterService carbonOutputEventAdapterService) {
         if (log.isDebugEnabled()) {
             log.debug("Setting the CarbonOutputEventAdapter Service");
         }
-        TenantResourceManagerDataHolder.getInstance().setCarbonOutputEventAdapterService(carbonOutputEventAdapterService);
+        TenantResourceManagerDataHolder.getInstance()
+                .setCarbonOutputEventAdapterService(carbonOutputEventAdapterService);
 
     }
 
-    protected void unsetCarbonOutputEventAdapterService(OutputEventAdapterService carbonOutputEventAdapterService){
+    protected void unsetCarbonOutputEventAdapterService(OutputEventAdapterService carbonOutputEventAdapterService) {
         if (log.isDebugEnabled()) {
             log.debug("Un Setting the CarbonOutputEventAdapter Service");
         }
         TenantResourceManagerDataHolder.getInstance().setCarbonOutputEventAdapterService(null);
     }
 
-    protected void setCarbonEventPublisherService(EventPublisherService carbonEventPublisherService){
+    protected void setCarbonEventPublisherService(EventPublisherService carbonEventPublisherService) {
         if (log.isDebugEnabled()) {
             log.debug("Setting the CarbonEventPublisherService");
         }
         TenantResourceManagerDataHolder.getInstance().setCarbonEventPublisherService(carbonEventPublisherService);
     }
 
-    protected void unsetCarbonEventPublisherService(EventPublisherService carbonEventPublisherService){
+    protected void unsetCarbonEventPublisherService(EventPublisherService carbonEventPublisherService) {
         if (log.isDebugEnabled()) {
             log.debug("Un Setting the CarbonEventPublisherService Service");
         }
         TenantResourceManagerDataHolder.getInstance().setCarbonEventPublisherService(null);
     }
 
-    protected void setCarbonEventStreamService(EventStreamService carbonEventStreamService){
+    protected void setCarbonEventStreamService(EventStreamService carbonEventStreamService) {
         if (log.isDebugEnabled()) {
             log.debug("Setting the EventStreamService");
         }
@@ -133,14 +134,14 @@ public class TenantResourceManagerServiceDS extends AbstractAxis2ConfigurationCo
 
     }
 
-    protected void unsetCarbonEventStreamService(EventStreamService carbonEventStreamService){
+    protected void unsetCarbonEventStreamService(EventStreamService carbonEventStreamService) {
         if (log.isDebugEnabled()) {
             log.debug("Un Setting the EventStreamService");
         }
         TenantResourceManagerDataHolder.getInstance().setCarbonEventStreamService(null);
     }
 
-    protected void setConfigurationManager(ConfigurationManager configurationManager){
+    protected void setConfigurationManager(ConfigurationManager configurationManager) {
         if (log.isDebugEnabled()) {
             log.debug("Setting the CarbonEventPublisherService");
         }
@@ -148,14 +149,14 @@ public class TenantResourceManagerServiceDS extends AbstractAxis2ConfigurationCo
 
     }
 
-    protected void unsetConfigurationManager(ConfigurationManager configurationManager){
+    protected void unsetConfigurationManager(ConfigurationManager configurationManager) {
         if (log.isDebugEnabled()) {
             log.debug("Un Setting theCarbonEventPublisherService Service");
         }
         TenantResourceManagerDataHolder.getInstance().setConfigurationManager(null);
     }
 
-    protected void setIdentityGovernanceService(IdentityGovernanceService identityGovernanceService){
+    protected void setIdentityGovernanceService(IdentityGovernanceService identityGovernanceService) {
         if (log.isDebugEnabled()) {
             log.debug("Setting the CarbonEventPublisherService");
         }
@@ -163,7 +164,7 @@ public class TenantResourceManagerServiceDS extends AbstractAxis2ConfigurationCo
 
     }
 
-    protected void unsetIdentityGovernanceService(IdentityGovernanceService identityGovernanceService){
+    protected void unsetIdentityGovernanceService(IdentityGovernanceService identityGovernanceService) {
         if (log.isDebugEnabled()) {
             log.debug("Un Setting theCarbonEventPublisherService Service");
         }

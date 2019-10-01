@@ -30,7 +30,7 @@ public class TenantResourceManagerDataHolder {
     private static volatile TenantResourceManagerDataHolder instance = new TenantResourceManagerDataHolder();
     private ConfigurationManager configurationManager;
 
-    private TenantResourceManagerDataHolder(){
+    private TenantResourceManagerDataHolder() {
     }
 
     public static TenantResourceManagerDataHolder getInstance() {
@@ -71,7 +71,7 @@ public class TenantResourceManagerDataHolder {
         this.carbonEventStreamService = carbonEventStreamService;
     }
 
-    public  EventStreamService  getCarbonEventStreamService(){
+    public EventStreamService getCarbonEventStreamService() {
         return carbonEventStreamService;
     }
 
@@ -87,7 +87,7 @@ public class TenantResourceManagerDataHolder {
         this.identityGovernanceService = identityGovernanceService;
     }
 
-    public IdentityGovernanceService getIdentityGovernanceService(){
+    public IdentityGovernanceService getIdentityGovernanceService() {
         return identityGovernanceService;
     }
 }
